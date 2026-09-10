@@ -18,18 +18,18 @@ def cab(mapset, mapa, titulo, largura=80, altura=24):
     L.append(f"* MAPSET  : {mapset}  - {titulo}".ljust(70) + "*")
     L.append(f"* MAPA    : {mapa}".ljust(70) + "*")
     L.append("*" * 71)
-    L.append(f"{mapset:<8} DFHMSD TYPE=&SYSPARM,".ljust(70) + "X")
-    L.append("               MODE=INOUT,".ljust(70) + "X")
-    L.append("               LANG=COBOL,".ljust(70) + "X")
-    L.append("               STORAGE=AUTO,".ljust(70) + "X")
-    L.append("               TIOAPFX=YES,".ljust(70) + "X")
-    L.append("               CTRL=(FREEKB,FRSET),".ljust(70) + "X")
-    L.append("               MAPATTS=(COLOR,HILIGHT),".ljust(70) + "X")
-    L.append("               DSATTS=(COLOR,HILIGHT),".ljust(70) + "X")
+    L.append(f"{mapset:<8} DFHMSD TYPE=&SYSPARM,".ljust(71) + "X")
+    L.append("               MODE=INOUT,".ljust(71) + "X")
+    L.append("               LANG=COBOL,".ljust(71) + "X")
+    L.append("               STORAGE=AUTO,".ljust(71) + "X")
+    L.append("               TIOAPFX=YES,".ljust(71) + "X")
+    L.append("               CTRL=(FREEKB,FRSET),".ljust(71) + "X")
+    L.append("               MAPATTS=(COLOR,HILIGHT),".ljust(71) + "X")
+    L.append("               DSATTS=(COLOR,HILIGHT),".ljust(71) + "X")
     L.append("               EXTATT=YES")
     L.append("*" * 71)
-    L.append(f"{mapa:<8} DFHMDI SIZE=({altura},{largura}),".ljust(70) + "X")
-    L.append("               LINE=1,".ljust(70) + "X")
+    L.append(f"{mapa:<8} DFHMDI SIZE=({altura},{largura}),".ljust(71) + "X")
+    L.append("               LINE=1,".ljust(71) + "X")
     L.append("               COLUMN=1")
     L.append("*" * 71)
     return L
@@ -44,7 +44,7 @@ def rotulo(lin, col, texto, cor='BLUE', attr='(PROT,NORM)'):
     espacos para alinhar o X: o espaco entraria no proprio
     texto do mapa."""
     L = [f"         DFHMDF POS=({lin},{col}),LENGTH={len(texto)},"
-         f"ATTRB={attr},".ljust(70) + "X"]
+         f"ATTRB={attr},".ljust(71) + "X"]
     prefixo = f"               COLOR={cor},INITIAL='"
     prim = 71 - len(prefixo)
     cont = 71 - 15
@@ -72,7 +72,7 @@ def campo(nome, lin, col, tam, prot=False, cor='GREEN',
         attr = '(UNPROT,IC,NORM)' if ic else '(UNPROT,NORM)'
         extra = ',HILIGHT=UNDERLINE'
     out = [f"{nome:<8} DFHMDF POS=({lin},{col}),LENGTH={tam},"
-           f"ATTRB={attr},".ljust(70) + "X",
+           f"ATTRB={attr},".ljust(71) + "X",
            f"               COLOR={cor}{extra}"]
     if not prot:
         out.append(f"         DFHMDF POS=({lin},{col + tam + 1}),"
@@ -108,7 +108,7 @@ def simbolico(mapset, mapa, campos, destino):
 
 def rodape(L, linhas_teclas):
     L += [f"MMENSAG  DFHMDF POS=(23,1),LENGTH=79,ATTRB=(PROT,BRT),"
-          .ljust(70) + "X",
+          .ljust(71) + "X",
           "               COLOR=RED"]
     L += rotulo(24, 1, linhas_teclas.ljust(79)[:79])
     L.append("*" * 71)
