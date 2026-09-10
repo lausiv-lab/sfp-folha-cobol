@@ -1,0 +1,123 @@
+***********************************************************************
+* MAPSET  : SFPM09  - JANELA DE CONSULTA DE DOMINIOS (LOOKUP F4)      *
+* MAPA    : MAPLOOK                                                   *
+* PROGRAMA: SFP0900                                                   *
+*                                                                     *
+* JANELA POPUP ACIONADA PELA TECLA F4 EM QUALQUER CAMPO DE CODIGO.    *
+* O PROGRAMA CHAMADOR PASSA O TIPO DE DOMINIO NA COMMAREA E RECEBE    *
+* DE VOLTA O CODIGO SELECIONADO PELO USUARIO.                         *
+***********************************************************************
+SFPM09   DFHMSD TYPE=&SYSPARM,                                         X
+               MODE=INOUT,                                             X
+               LANG=COBOL,                                             X
+               STORAGE=AUTO,                                           X
+               TIOAPFX=YES,                                            X
+               CTRL=(FREEKB,FRSET),                                    X
+               MAPATTS=(COLOR,HILIGHT),                                X
+               DSATTS=(COLOR,HILIGHT),                                 X
+               EXTATT=YES
+***********************************************************************
+* JANELA DE 18 LINHAS POSICIONADA SOBRE A TELA DO CHAMADOR            *
+***********************************************************************
+MAPLOOK  DFHMDI SIZE=(18,54),                                          X
+               LINE=4,                                                 X
+               COLUMN=14
+***********************************************************************
+         DFHMDF POS=(1,1),LENGTH=52,ATTRB=(PROT,BRT),                  X
+               COLOR=NEUTRAL,HILIGHT=REVERSE,                          X
+               INITIAL=' CONSULTA DE DOMINIO                          '
+         DFHMDF POS=(2,1),LENGTH=8,ATTRB=(PROT,NORM),                  X
+               COLOR=BLUE,INITIAL='TABELA :'
+LTIPO    DFHMDF POS=(2,10),LENGTH=35,ATTRB=(PROT,NORM),                X
+               COLOR=TURQUOISE
+         DFHMDF POS=(3,1),LENGTH=8,ATTRB=(PROT,NORM),                  X
+               COLOR=BLUE,INITIAL='FILTRO :'
+LFILTRO  DFHMDF POS=(3,10),LENGTH=20,ATTRB=(UNPROT,IC,NORM),           X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(3,31),LENGTH=1,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(4,1),LENGTH=52,ATTRB=(PROT,NORM),                 X
+               COLOR=BLUE,                                             X
+               INITIAL='S  CODIGO  DESCRICAO                          '
+         DFHMDF POS=(5,1),LENGTH=52,ATTRB=(PROT,NORM),                 X
+               COLOR=BLUE,                                             X
+               INITIAL='-  ------- -----------------------------------'
+LSEL1    DFHMDF POS=(6,1),LENGTH=1,ATTRB=(UNPROT,NORM),                X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(6,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD1    DFHMDF POS=(6,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),             X
+               COLOR=TURQUOISE
+LDES1    DFHMDF POS=(6,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),           X
+               COLOR=NEUTRAL
+LSEL2    DFHMDF POS=(7,1),LENGTH=1,ATTRB=(UNPROT,NORM),                X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(7,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD2    DFHMDF POS=(7,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),             X
+               COLOR=TURQUOISE
+LDES2    DFHMDF POS=(7,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),           X
+               COLOR=NEUTRAL
+LSEL3    DFHMDF POS=(8,1),LENGTH=1,ATTRB=(UNPROT,NORM),                X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(8,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD3    DFHMDF POS=(8,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),             X
+               COLOR=TURQUOISE
+LDES3    DFHMDF POS=(8,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),           X
+               COLOR=NEUTRAL
+LSEL4    DFHMDF POS=(9,1),LENGTH=1,ATTRB=(UNPROT,NORM),                X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(9,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD4    DFHMDF POS=(9,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),             X
+               COLOR=TURQUOISE
+LDES4    DFHMDF POS=(9,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),           X
+               COLOR=NEUTRAL
+LSEL5    DFHMDF POS=(10,1),LENGTH=1,ATTRB=(UNPROT,NORM),               X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(10,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD5    DFHMDF POS=(10,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),            X
+               COLOR=TURQUOISE
+LDES5    DFHMDF POS=(10,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),          X
+               COLOR=NEUTRAL
+LSEL6    DFHMDF POS=(11,1),LENGTH=1,ATTRB=(UNPROT,NORM),               X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(11,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD6    DFHMDF POS=(11,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),            X
+               COLOR=TURQUOISE
+LDES6    DFHMDF POS=(11,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),          X
+               COLOR=NEUTRAL
+LSEL7    DFHMDF POS=(12,1),LENGTH=1,ATTRB=(UNPROT,NORM),               X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(12,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD7    DFHMDF POS=(12,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),            X
+               COLOR=TURQUOISE
+LDES7    DFHMDF POS=(12,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),          X
+               COLOR=NEUTRAL
+LSEL8    DFHMDF POS=(13,1),LENGTH=1,ATTRB=(UNPROT,NORM),               X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(13,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD8    DFHMDF POS=(13,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),            X
+               COLOR=TURQUOISE
+LDES8    DFHMDF POS=(13,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),          X
+               COLOR=NEUTRAL
+LSEL9    DFHMDF POS=(14,1),LENGTH=1,ATTRB=(UNPROT,NORM),               X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(14,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCOD9    DFHMDF POS=(14,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),            X
+               COLOR=TURQUOISE
+LDES9    DFHMDF POS=(14,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),          X
+               COLOR=NEUTRAL
+LSELA    DFHMDF POS=(15,1),LENGTH=1,ATTRB=(UNPROT,NORM),               X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(15,3),LENGTH=0,ATTRB=(ASKIP,NORM)
+LCODA    DFHMDF POS=(15,4),LENGTH=7,ATTRB=(PROT,FSET,NORM),            X
+               COLOR=TURQUOISE
+LDESA    DFHMDF POS=(15,12),LENGTH=41,ATTRB=(PROT,FSET,NORM),          X
+               COLOR=NEUTRAL
+LPAGINA  DFHMDF POS=(16,1),LENGTH=30,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE
+LMENSAG  DFHMDF POS=(17,1),LENGTH=52,ATTRB=(PROT,BRT),                 X
+               COLOR=RED
+         DFHMDF POS=(18,1),LENGTH=52,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,                                             X
+               INITIAL='F3=CANCELA F7=ANT F8=PROX ENTER=SELECIONA    '
+***********************************************************************
+         DFHMSD TYPE=FINAL
+         END

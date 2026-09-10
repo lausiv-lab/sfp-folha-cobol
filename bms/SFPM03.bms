@@ -1,0 +1,145 @@
+***********************************************************************
+* MAPSET  : SFPM03  - CADASTRO DE RUBRICAS E EVENTOS                  *
+* MAPA    : MAPEVEN                                                   *
+***********************************************************************
+SFPM03   DFHMSD TYPE=&SYSPARM,                                        X
+               MODE=INOUT,                                            X
+               LANG=COBOL,                                            X
+               STORAGE=AUTO,                                          X
+               TIOAPFX=YES,                                           X
+               CTRL=(FREEKB,FRSET),                                   X
+               MAPATTS=(COLOR,HILIGHT),                               X
+               DSATTS=(COLOR,HILIGHT),                                X
+               EXTATT=YES
+***********************************************************************
+MAPEVEN  DFHMDI SIZE=(24,80),                                         X
+               LINE=1,                                                X
+               COLUMN=1
+***********************************************************************
+         DFHMDF POS=(1,1),LENGTH=7,ATTRB=(PROT,NORM),                 X
+               COLOR=BLUE,INITIAL='SFP0110'
+         DFHMDF POS=(1,24),LENGTH=30,ATTRB=(PROT,BRT),                X
+               COLOR=NEUTRAL,INITIAL='CADASTRO DE RUBRICAS / EVENTOS'
+         DFHMDF POS=(1,68),LENGTH=4,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='SF04'
+         DFHMDF POS=(2,1),LENGTH=5,ATTRB=(PROT,NORM),                 X
+               COLOR=BLUE,INITIAL='ACAO:'
+MACAO    DFHMDF POS=(2,7),LENGTH=1,ATTRB=(UNPROT,IC,NORM),            X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(2,9),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(2,12),LENGTH=43,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='(I=INCLUIR A=ALTERAR C=CONSULTAR E=EX
+               XCLUIR)'
+         DFHMDF POS=(2,58),LENGTH=7,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='CODIGO:'
+MCODIGO  DFHMDF POS=(2,66),LENGTH=4,ATTRB=(UNPROT,NORM),              X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(2,71),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(3,1),LENGTH=79,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='------------------------------------X
+               -------------------------------------------'
+         DFHMDF POS=(4,3),LENGTH=17,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='DESCRICAO ......:'
+MDESCR   DFHMDF POS=(4,21),LENGTH=30,ATTRB=(UNPROT,NORM),             X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(4,52),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(5,3),LENGTH=17,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='NATUREZA .......:'
+MNATUR   DFHMDF POS=(5,21),LENGTH=1,ATTRB=(UNPROT,NORM),              X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(5,23),LENGTH=0,ATTRB=(ASKIP,NORM)
+MDESNAT  DFHMDF POS=(5,24),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=TURQUOISE
+         DFHMDF POS=(5,60),LENGTH=8,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='F4=LISTA'
+         DFHMDF POS=(6,3),LENGTH=17,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='TIPO DE CALCULO :'
+MTIPCAL  DFHMDF POS=(6,21),LENGTH=3,ATTRB=(UNPROT,NORM),              X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(6,25),LENGTH=0,ATTRB=(ASKIP,NORM)
+MDESTIP  DFHMDF POS=(6,26),LENGTH=34,ATTRB=(PROT,NORM),               X
+               COLOR=TURQUOISE
+         DFHMDF POS=(7,3),LENGTH=17,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='UNIDADE ........:'
+MUNIDAD  DFHMDF POS=(7,21),LENGTH=2,ATTRB=(UNPROT,NORM),              X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(7,24),LENGTH=0,ATTRB=(ASKIP,NORM)
+MDESUNI  DFHMDF POS=(7,25),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=TURQUOISE
+         DFHMDF POS=(7,60),LENGTH=8,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='F4=LISTA'
+         DFHMDF POS=(8,3),LENGTH=17,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='PERCENTUAL .....:'
+MPERCEN  DFHMDF POS=(8,21),LENGTH=6,ATTRB=(UNPROT,NORM),              X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(8,28),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(8,30),LENGTH=1,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='%'
+         DFHMDF POS=(9,3),LENGTH=17,ATTRB=(PROT,NORM),                X
+               COLOR=BLUE,INITIAL='CONTA CONTABIL .:'
+MCONTA   DFHMDF POS=(9,21),LENGTH=8,ATTRB=(UNPROT,NORM),              X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(9,30),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(10,3),LENGTH=17,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='SITUACAO .......:'
+MSITUAC  DFHMDF POS=(10,21),LENGTH=1,ATTRB=(UNPROT,NORM),             X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(10,23),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(10,24),LENGTH=20,ATTRB=(PROT,NORM),              X
+               COLOR=BLUE,INITIAL='(A=ATIVA  I=INATIVA)'
+         DFHMDF POS=(11,1),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='------------------------------------X
+               -------------------------------------------'
+         DFHMDF POS=(12,3),LENGTH=48,ATTRB=(PROT,BRT),                X
+               COLOR=YELLOW,INITIAL='INCIDENCIAS DA RUBRICA  (S=INCIDE X
+                N=NAO INCIDE)'
+         DFHMDF POS=(14,5),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='BASE DE INSS ......:'
+MINCINS  DFHMDF POS=(14,26),LENGTH=1,ATTRB=(UNPROT,NORM),             X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(14,28),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(14,42),LENGTH=20,ATTRB=(PROT,NORM),              X
+               COLOR=BLUE,INITIAL='BASE DE DSR .......:'
+MINCDSR  DFHMDF POS=(14,63),LENGTH=1,ATTRB=(UNPROT,NORM),             X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(14,65),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(15,5),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='BASE DE IRRF ......:'
+MINCIRR  DFHMDF POS=(15,26),LENGTH=1,ATTRB=(UNPROT,NORM),             X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(15,28),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(15,42),LENGTH=20,ATTRB=(PROT,NORM),              X
+               COLOR=BLUE,INITIAL='BASE DE 13o SALARIO:'
+MINC13O  DFHMDF POS=(15,63),LENGTH=1,ATTRB=(UNPROT,NORM),             X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(15,65),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(16,5),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='BASE DE FGTS ......:'
+MINCFGT  DFHMDF POS=(16,26),LENGTH=1,ATTRB=(UNPROT,NORM),             X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(16,28),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(16,42),LENGTH=20,ATTRB=(PROT,NORM),              X
+               COLOR=BLUE,INITIAL='BASE DE FERIAS ....:'
+MINCFER  DFHMDF POS=(16,63),LENGTH=1,ATTRB=(UNPROT,NORM),             X
+               COLOR=GREEN,HILIGHT=UNDERLINE
+         DFHMDF POS=(16,65),LENGTH=0,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(18,1),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='------------------------------------X
+               -------------------------------------------'
+         DFHMDF POS=(19,3),LENGTH=61,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='TIPOS DE CALCULO: 001=VALOR INFORMADX
+               O  002=HORAS X VALOR HORA'
+         DFHMDF POS=(20,3),LENGTH=62,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='004=% SOBRE SALARIO  005=% SOBRE MINX
+               IMO  006=% SOBRE PROVENTOS'
+         DFHMDF POS=(21,3),LENGTH=64,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='ATENCAO: TIPOS DE 100 A 199 SAO RESEX
+               RVADOS AO CALCULO AUTOMATICO'
+MMENSAG  DFHMDF POS=(23,1),LENGTH=79,ATTRB=(PROT,BRT),                X
+               COLOR=RED
+         DFHMDF POS=(24,1),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='F3=SAIR  F4=CONSULTA  F5=LER  F6=GRAX
+               VAR  F12=LIMPAR                            '
+***********************************************************************
+         DFHMSD TYPE=FINAL
+         END

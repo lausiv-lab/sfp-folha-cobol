@@ -1,0 +1,18 @@
+# Executaveis e modulos compilados pelo build/build.sh
+build/SFP*
+!build/*.sh
+
+# Resultados de execucao (regerados por build/run.sh)
+saidas/*
+!saidas/.gitkeep
+
+# Massa ficticia (regerada por tools/gerar_massa.py, semente fixa)
+dados/*
+!dados/.gitkeep
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc

@@ -1,0 +1,263 @@
+--*****************************************************************
+--* MEMBRO   : SFPDDL02                                           *
+--* FUNCAO   : CRIACAO DAS TABELAS DO SISTEMA DE FOLHA            *
+--*****************************************************************
+
+--=================================================================
+-- TB_EMPREGADO - CADASTRO DE EMPREGADOS
+--=================================================================
+CREATE TABLE SFPADM.TB_EMPREGADO
+   (MATRICULA            DECIMAL(8,0)   NOT NULL,
+    NOME                 CHAR(40)       NOT NULL,
+    CPF                  DECIMAL(11,0)  NOT NULL,
+    PIS                  DECIMAL(11,0)  NOT NULL WITH DEFAULT,
+    DT_ADMISSAO          DATE           NOT NULL,
+    DT_DEMISSAO          DATE                        ,
+    DT_NASCIMENTO        DATE           NOT NULL,
+    SITUACAO             CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    COD_CARGO            SMALLINT       NOT NULL,
+    COD_DEPTO            SMALLINT       NOT NULL,
+    CENTRO_CUSTO         DECIMAL(6,0)   NOT NULL,
+    SALARIO_BASE         DECIMAL(11,2)  NOT NULL,
+    TIPO_SALARIO         CHAR(01)       NOT NULL WITH DEFAULT 'M',
+    CARGA_HOR_MES        SMALLINT       NOT NULL WITH DEFAULT 220,
+    QTD_DEP_IRRF         SMALLINT       NOT NULL WITH DEFAULT 0,
+    QTD_DEP_SALFAM       SMALLINT       NOT NULL WITH DEFAULT 0,
+    PERC_INSALUBRID      SMALLINT       NOT NULL WITH DEFAULT 0,
+    IND_PERICULOSID      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    IND_VALE_TRANSP      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    VLR_VALE_TRANSP      DECIMAL(9,2)   NOT NULL WITH DEFAULT 0,
+    IND_VALE_REFEIC      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    VLR_VALE_REFEIC      DECIMAL(9,2)   NOT NULL WITH DEFAULT 0,
+    IND_PLANO_SAUDE      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    VLR_PLANO_SAUDE      DECIMAL(9,2)   NOT NULL WITH DEFAULT 0,
+    PERC_PENSAO          DECIMAL(5,2)   NOT NULL WITH DEFAULT 0,
+    VLR_PENSAO_FIXO      DECIMAL(9,2)   NOT NULL WITH DEFAULT 0,
+    VLR_CONSIGNADO       DECIMAL(9,2)   NOT NULL WITH DEFAULT 0,
+    QTD_PARC_CONSIG      SMALLINT       NOT NULL WITH DEFAULT 0,
+    IND_ADIANTAMENTO     CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    PERC_ADIANTAMENTO    SMALLINT       NOT NULL WITH DEFAULT 40,
+    IND_SINDICALIZADO    CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    BANCO                SMALLINT       NOT NULL WITH DEFAULT 0,
+    AGENCIA              DECIMAL(5,0)   NOT NULL WITH DEFAULT 0,
+    CONTA                DECIMAL(12,0)  NOT NULL WITH DEFAULT 0,
+    DIG_CONTA            CHAR(01)       NOT NULL WITH DEFAULT '0',
+    TIPO_CONTA           CHAR(01)       NOT NULL WITH DEFAULT 'C',
+    CATEG_ESOCIAL        SMALLINT       NOT NULL WITH DEFAULT 101,
+    SEXO                 CHAR(01)       NOT NULL WITH DEFAULT 'M',
+    GRAU_INSTRUCAO       SMALLINT       NOT NULL WITH DEFAULT 0,
+    MEDIA_VARIAVEIS      DECIMAL(11,2)  NOT NULL WITH DEFAULT 0,
+    SALDO_FGTS           DECIMAL(11,2)  NOT NULL WITH DEFAULT 0,
+    TS_ATUALIZACAO       TIMESTAMP      NOT NULL WITH DEFAULT
+                                        CURRENT TIMESTAMP,
+    USUARIO_ATUALIZ      CHAR(08)       NOT NULL WITH DEFAULT 'SFPBATCH',
+    PRIMARY KEY (MATRICULA),
+    CONSTRAINT CK_EMP_SIT  CHECK (SITUACAO     IN ('A','F','L','D')),
+    CONSTRAINT CK_EMP_TIPO CHECK (TIPO_SALARIO IN ('M','H','D')),
+    CONSTRAINT CK_EMP_SAL  CHECK (SALARIO_BASE > 0)
+   )
+   IN DBSFP001.TSSFPCAD
+   AUDIT CHANGES
+   DATA CAPTURE CHANGES;
+
+--=================================================================
+-- TB_EMPREGADO_COMPL - DADOS PESSOAIS, DOCUMENTOS E ENDERECO
+--=================================================================
+CREATE TABLE SFPADM.TB_EMPREGADO_COMPL
+   (MATRICULA            DECIMAL(8,0)   NOT NULL,
+    ESTADO_CIVIL         CHAR(01)       NOT NULL WITH DEFAULT 'S',
+    RACA_COR             SMALLINT       NOT NULL WITH DEFAULT,
+    NACIONALIDADE        SMALLINT       NOT NULL WITH DEFAULT,
+    UF_NASCIMENTO        CHAR(02)       NOT NULL WITH DEFAULT,
+    MUN_NASCIMENTO       DECIMAL(7,0)   NOT NULL WITH DEFAULT,
+    NOME_MAE             CHAR(40)       NOT NULL WITH DEFAULT,
+    IND_DEFICIENCIA      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    TIPO_DEFICIENCIA     SMALLINT       NOT NULL WITH DEFAULT,
+    CTPS_NUMERO          DECIMAL(8,0)   NOT NULL WITH DEFAULT,
+    CTPS_SERIE           DECIMAL(5,0)   NOT NULL WITH DEFAULT,
+    CTPS_UF              CHAR(02)       NOT NULL WITH DEFAULT,
+    RG_NUMERO            CHAR(15)       NOT NULL WITH DEFAULT,
+    RG_ORGAO             CHAR(08)       NOT NULL WITH DEFAULT,
+    TITULO_ELEITOR       DECIMAL(12,0)  NOT NULL WITH DEFAULT,
+    TIPO_LOGRADOURO      CHAR(03)       NOT NULL WITH DEFAULT,
+    LOGRADOURO           CHAR(40)       NOT NULL WITH DEFAULT,
+    NUMERO               CHAR(08)       NOT NULL WITH DEFAULT,
+    COMPLEMENTO          CHAR(15)       NOT NULL WITH DEFAULT,
+    BAIRRO               CHAR(25)       NOT NULL WITH DEFAULT,
+    COD_MUNICIPIO        DECIMAL(7,0)   NOT NULL WITH DEFAULT,
+    UF                   CHAR(02)       NOT NULL WITH DEFAULT,
+    CEP                  DECIMAL(8,0)   NOT NULL WITH DEFAULT,
+    TELEFONE             CHAR(14)       NOT NULL WITH DEFAULT,
+    COD_ESTABELEC        SMALLINT       NOT NULL WITH DEFAULT,
+    TIPO_VINCULO         SMALLINT       NOT NULL WITH DEFAULT,
+    TIPO_JORNADA         SMALLINT       NOT NULL WITH DEFAULT,
+    COD_HORARIO          SMALLINT       NOT NULL WITH DEFAULT,
+    TS_ATUALIZACAO       TIMESTAMP      NOT NULL,
+    USUARIO_ATUALIZ      CHAR(08)       NOT NULL,
+    PRIMARY KEY (MATRICULA),
+    CONSTRAINT FK_EMC_EMP FOREIGN KEY (MATRICULA)
+        REFERENCES SFPADM.TB_EMPREGADO (MATRICULA)
+        ON DELETE CASCADE,
+    CONSTRAINT CK_EMC_ECI  CHECK (ESTADO_CIVIL IN
+                                 ('S','C','D','V','U','P')),
+    CONSTRAINT CK_EMC_DEF  CHECK (IND_DEFICIENCIA IN ('S','N'))
+   )
+   IN DBSFP001.TSSFPCAD
+   AUDIT CHANGES;
+
+--=================================================================
+-- TB_DEPENDENTE
+--=================================================================
+CREATE TABLE SFPADM.TB_DEPENDENTE
+   (MATRICULA            DECIMAL(8,0)   NOT NULL,
+    SEQUENCIA            SMALLINT       NOT NULL,
+    NOME                 CHAR(35)       NOT NULL,
+    DT_NASCIMENTO        DATE           NOT NULL,
+    GRAU_PARENTESCO      SMALLINT       NOT NULL,
+    IND_IRRF             CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    IND_SALARIO_FAM      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    IND_PLANO_SAUDE      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    VLR_PLANO_SAUDE      DECIMAL(9,2)   NOT NULL WITH DEFAULT 0,
+    PRIMARY KEY (MATRICULA, SEQUENCIA),
+    CONSTRAINT FK_DEP_EMP FOREIGN KEY (MATRICULA)
+        REFERENCES SFPADM.TB_EMPREGADO (MATRICULA)
+        ON DELETE CASCADE
+   )
+   IN DBSFP001.TSSFPCAD;
+
+--=================================================================
+-- TB_EVENTO - RUBRICAS DA FOLHA
+--=================================================================
+CREATE TABLE SFPADM.TB_EVENTO
+   (COD_EVENTO           SMALLINT       NOT NULL,
+    DESCRICAO            CHAR(30)       NOT NULL,
+    NATUREZA             CHAR(01)       NOT NULL,
+    TIPO_CALCULO         SMALLINT       NOT NULL,
+    INC_INSS             CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    INC_IRRF             CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    INC_FGTS             CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    INC_DSR              CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    INC_13O              CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    INC_FERIAS           CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    UNIDADE              CHAR(02)       NOT NULL WITH DEFAULT 'VL',
+    PERCENTUAL           DECIMAL(5,2)   NOT NULL WITH DEFAULT 0,
+    CONTA_CONTABIL       DECIMAL(8,0)   NOT NULL WITH DEFAULT 0,
+    SITUACAO             CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    PRIMARY KEY (COD_EVENTO),
+    CONSTRAINT CK_EVE_NAT CHECK (NATUREZA IN ('P','D','I','B'))
+   )
+   IN DBSFP001.TSSFPCAD;
+
+--=================================================================
+-- TB_MOVIMENTO - LANCAMENTOS DA COMPETENCIA
+--=================================================================
+CREATE TABLE SFPADM.TB_MOVIMENTO
+   (MATRICULA            DECIMAL(8,0)   NOT NULL,
+    COMPETENCIA          DECIMAL(6,0)   NOT NULL,
+    COD_EVENTO           SMALLINT       NOT NULL,
+    REFERENCIA           DECIMAL(7,2)   NOT NULL WITH DEFAULT 0,
+    VALOR                DECIMAL(11,2)  NOT NULL WITH DEFAULT 0,
+    TIPO_LANC            CHAR(01)       NOT NULL WITH DEFAULT 'M',
+    ORIGEM               CHAR(03)       NOT NULL WITH DEFAULT 'ONL',
+    DT_LANCAMENTO        DATE           NOT NULL WITH DEFAULT,
+    USUARIO              CHAR(08)       NOT NULL WITH DEFAULT,
+    SIT_CRITICA          CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    PRIMARY KEY (MATRICULA, COMPETENCIA, COD_EVENTO),
+    CONSTRAINT FK_MOV_EMP FOREIGN KEY (MATRICULA)
+        REFERENCES SFPADM.TB_EMPREGADO (MATRICULA),
+    CONSTRAINT FK_MOV_EVE FOREIGN KEY (COD_EVENTO)
+        REFERENCES SFPADM.TB_EVENTO (COD_EVENTO)
+   )
+   IN DBSFP001.TSSFPMOV
+   PARTITION BY (COMPETENCIA ASC);
+
+--=================================================================
+-- TB_FOLHA_CALC - RESULTADO DO MOTOR DE CALCULO
+--=================================================================
+CREATE TABLE SFPADM.TB_FOLHA_CALC
+   (COMPETENCIA          DECIMAL(6,0)   NOT NULL,
+    TIPO_FOLHA           CHAR(01)       NOT NULL,
+    MATRICULA            DECIMAL(8,0)   NOT NULL,
+    SEQUENCIA            SMALLINT       NOT NULL,
+    COD_EVENTO           SMALLINT       NOT NULL,
+    DESCRICAO            CHAR(30)       NOT NULL,
+    NATUREZA             CHAR(01)       NOT NULL,
+    REFERENCIA           DECIMAL(7,2)   NOT NULL WITH DEFAULT 0,
+    VALOR                DECIMAL(11,2)  NOT NULL WITH DEFAULT 0,
+    CENTRO_CUSTO         DECIMAL(6,0)   NOT NULL,
+    CONTA_CONTABIL       DECIMAL(8,0)   NOT NULL WITH DEFAULT 0,
+    PRIMARY KEY (COMPETENCIA, TIPO_FOLHA, MATRICULA, SEQUENCIA)
+   )
+   IN DBSFP001.TSSFPFOL
+   PARTITION BY (COMPETENCIA ASC);
+
+--=================================================================
+-- TB_FOLHA_RESUMO - TOTAIS POR EMPREGADO
+--=================================================================
+CREATE TABLE SFPADM.TB_FOLHA_RESUMO
+   (COMPETENCIA          DECIMAL(6,0)   NOT NULL,
+    TIPO_FOLHA           CHAR(01)       NOT NULL,
+    MATRICULA            DECIMAL(8,0)   NOT NULL,
+    NOME                 CHAR(40)       NOT NULL,
+    CENTRO_CUSTO         DECIMAL(6,0)   NOT NULL,
+    SALARIO_BASE         DECIMAL(11,2)  NOT NULL,
+    TOT_PROVENTOS        DECIMAL(11,2)  NOT NULL,
+    TOT_DESCONTOS        DECIMAL(11,2)  NOT NULL,
+    LIQUIDO              DECIMAL(11,2)  NOT NULL,
+    BASE_INSS            DECIMAL(11,2)  NOT NULL,
+    BASE_IRRF            DECIMAL(11,2)  NOT NULL,
+    BASE_FGTS            DECIMAL(11,2)  NOT NULL,
+    VLR_INSS             DECIMAL(11,2)  NOT NULL,
+    VLR_IRRF             DECIMAL(11,2)  NOT NULL,
+    VLR_FGTS             DECIMAL(11,2)  NOT NULL,
+    VLR_SAL_FAMILIA      DECIMAL(9,2)   NOT NULL WITH DEFAULT 0,
+    ALIQ_INSS_EFET       DECIMAL(5,2)   NOT NULL WITH DEFAULT 0,
+    ALIQ_IRRF            DECIMAL(5,2)   NOT NULL WITH DEFAULT 0,
+    QTD_EVENTOS          SMALLINT       NOT NULL WITH DEFAULT 0,
+    BANCO                SMALLINT       NOT NULL WITH DEFAULT 0,
+    AGENCIA              DECIMAL(5,0)   NOT NULL WITH DEFAULT 0,
+    CONTA                DECIMAL(12,0)  NOT NULL WITH DEFAULT 0,
+    DIG_CONTA            CHAR(01)       NOT NULL WITH DEFAULT '0',
+    CPF                  DECIMAL(11,0)  NOT NULL,
+    PRIMARY KEY (COMPETENCIA, TIPO_FOLHA, MATRICULA)
+   )
+   IN DBSFP001.TSSFPFOL
+   PARTITION BY (COMPETENCIA ASC);
+
+--=================================================================
+-- TB_TABELA_LEGAL - INSS, IRRF, SALARIO FAMILIA E PARAMETROS
+--=================================================================
+CREATE TABLE SFPADM.TB_TABELA_LEGAL
+   (TIPO_TABELA          CHAR(03)       NOT NULL,
+    COMPETENCIA          DECIMAL(6,0)   NOT NULL,
+    SEQUENCIA            SMALLINT       NOT NULL,
+    CHAVE                CHAR(15)       NOT NULL WITH DEFAULT,
+    LIMITE               DECIMAL(11,2)  NOT NULL WITH DEFAULT 0,
+    ALIQUOTA             DECIMAL(7,4)   NOT NULL WITH DEFAULT 0,
+    DEDUCAO              DECIMAL(11,2)  NOT NULL WITH DEFAULT 0,
+    DESCRICAO            CHAR(30)       NOT NULL WITH DEFAULT,
+    PRIMARY KEY (TIPO_TABELA, COMPETENCIA, SEQUENCIA),
+    CONSTRAINT CK_TAB_TIPO
+        CHECK (TIPO_TABELA IN ('PAR','INS','IRF','SFA'))
+   )
+   IN DBSFP001.TSSFPTAB;
+
+--=================================================================
+-- TB_LOG_FOLHA - TRILHA DE AUDITORIA DOS PROCESSAMENTOS
+--=================================================================
+CREATE TABLE SFPADM.TB_LOG_FOLHA
+   (ID_LOG               BIGINT         NOT NULL
+                         GENERATED ALWAYS AS IDENTITY
+                         (START WITH 1 INCREMENT BY 1),
+    COMPETENCIA          DECIMAL(6,0)   NOT NULL,
+    PROGRAMA             CHAR(08)       NOT NULL,
+    JOBNAME              CHAR(08)       NOT NULL WITH DEFAULT,
+    TS_INICIO            TIMESTAMP      NOT NULL,
+    TS_FIM               TIMESTAMP                   ,
+    QTD_LIDOS            INTEGER        NOT NULL WITH DEFAULT 0,
+    QTD_GRAVADOS         INTEGER        NOT NULL WITH DEFAULT 0,
+    QTD_CRITICAS         INTEGER        NOT NULL WITH DEFAULT 0,
+    RETURN_CODE          SMALLINT       NOT NULL WITH DEFAULT 0,
+    PRIMARY KEY (ID_LOG)
+   )
+   IN DBSFP001.TSSFPTAB;

@@ -1,0 +1,412 @@
+***********************************************************************
+* MAPSET  : SFPM01 - MANUTENCAO DO CADASTRO DE EMPREGADOS             *
+* MAPA    : MAPEMP - TELA 24 X 80                                     *
+* PROGRAMA: SFP0100                                                   *
+* TRANSACAO: SF01                                                     *
+***********************************************************************
+SFPM01   DFHMSD TYPE=&SYSPARM,                                         X
+               MODE=INOUT,                                             X
+               LANG=COBOL,                                             X
+               STORAGE=AUTO,                                           X
+               TIOAPFX=YES,                                            X
+               CTRL=(FREEKB,FRSET),                                    X
+               MAPATTS=(COLOR,HILIGHT),                                X
+               DSATTS=(COLOR,HILIGHT),                                 X
+               EXTATT=YES
+***********************************************************************
+MAPEMP   DFHMDI SIZE=(24,80),                                          X
+               LINE=1,                                                 X
+               COLUMN=1
+***********************************************************************
+* LINHA 1 - IDENTIFICACAO DO SISTEMA                                  *
+***********************************************************************
+         DFHMDF POS=(01,01),LENGTH=07,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='SFP0100'
+         DFHMDF POS=(01,20),LENGTH=41,ATTRB=(PROT,BRT),                X
+               COLOR=NEUTRAL,                                          X
+               INITIAL='SISTEMA DE FOLHA DE PAGAMENTO - CADASTRO'
+DATA     DFHMDF POS=(01,70),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE
+         DFHMDF POS=(02,01),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,                                             X
+               INITIAL='-----------------------------------------------X
+               --------------------------------'
+***********************************************************************
+* LINHA 3 - CHAVE E ACAO                                              *
+***********************************************************************
+         DFHMDF POS=(03,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='MATRICULA:'
+MATRIC   DFHMDF POS=(03,12),LENGTH=08,ATTRB=(UNPROT,NUM,IC),           X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
+               INITIAL='        '
+         DFHMDF POS=(03,21),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(03,24),LENGTH=06,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='ACAO :'
+ACAO     DFHMDF POS=(03,31),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(03,33),LENGTH=46,ATTRB=(PROT,NORM),               X
+               COLOR=YELLOW,                                           X
+               INITIAL='(C=CONSULTA I=INCLUSAO A=ALTERACAO E=EXCLUSAO)'
+***********************************************************************
+* DADOS PESSOAIS                                                      *
+***********************************************************************
+         DFHMDF POS=(05,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='NOME     :'
+NOME     DFHMDF POS=(05,12),LENGTH=40,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(05,53),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(06,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='CPF      :'
+CPF      DFHMDF POS=(06,12),LENGTH=11,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(06,24),LENGTH=05,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='PIS :'
+PIS      DFHMDF POS=(06,30),LENGTH=11,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(06,42),LENGTH=07,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='NASC. :'
+DTNASC   DFHMDF POS=(06,50),LENGTH=08,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(06,59),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=YELLOW,INITIAL='(AAAAMMDD)'
+***********************************************************************
+* VINCULO                                                             *
+***********************************************************************
+         DFHMDF POS=(08,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='ADMISSAO :'
+DTADM    DFHMDF POS=(08,12),LENGTH=08,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(08,21),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='DEMISSAO :'
+DTDEM    DFHMDF POS=(08,32),LENGTH=08,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(08,41),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='SITUACAO :'
+SITUAC   DFHMDF POS=(08,52),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(08,54),LENGTH=25,ATTRB=(PROT,NORM),               X
+               COLOR=YELLOW,INITIAL='(A/F/L/D)'
+         DFHMDF POS=(09,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='CARGO    :'
+CARGO    DFHMDF POS=(09,12),LENGTH=04,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(09,17),LENGTH=08,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='DEPTO  :'
+DEPTO    DFHMDF POS=(09,26),LENGTH=04,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(09,31),LENGTH=14,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='CENTRO CUSTO :'
+CCUSTO   DFHMDF POS=(09,46),LENGTH=06,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(09,53),LENGTH=01,ATTRB=(ASKIP,NORM)
+***********************************************************************
+* REMUNERACAO                                                         *
+***********************************************************************
+         DFHMDF POS=(11,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='SALARIO  :'
+SALARIO  DFHMDF POS=(11,12),LENGTH=11,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
+               PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
+         DFHMDF POS=(11,24),LENGTH=06,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='TIPO :'
+TPSAL    DFHMDF POS=(11,31),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(11,33),LENGTH=09,ATTRB=(PROT,NORM),               X
+               COLOR=YELLOW,INITIAL='(M/H/D)'
+         DFHMDF POS=(11,43),LENGTH=12,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='CARGA/MES :'
+CARGAH   DFHMDF POS=(11,56),LENGTH=03,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(11,60),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(12,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='DEP.IRRF :'
+DEPIRF   DFHMDF POS=(12,12),LENGTH=02,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(12,15),LENGTH=13,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='DEP.SAL.FAM:'
+DEPSFA   DFHMDF POS=(12,29),LENGTH=02,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(12,32),LENGTH=14,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='INSALUBRID.%:'
+INSALU   DFHMDF POS=(12,47),LENGTH=02,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(12,50),LENGTH=13,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='PERICULOS.:'
+PERICU   DFHMDF POS=(12,64),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(12,66),LENGTH=07,ATTRB=(PROT,NORM),               X
+               COLOR=YELLOW,INITIAL='(S/N)'
+***********************************************************************
+* BENEFICIOS E DESCONTOS                                              *
+***********************************************************************
+         DFHMDF POS=(14,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='V.TRANSP.:'
+INDVT    DFHMDF POS=(14,12),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+VLRVT    DFHMDF POS=(14,14),LENGTH=09,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
+               PICIN='9(7)V99',PICOUT='ZZZ.ZZ9,99'
+         DFHMDF POS=(14,24),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='V.REFEIC.:'
+INDVR    DFHMDF POS=(14,35),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+VLRVR    DFHMDF POS=(14,37),LENGTH=09,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
+               PICIN='9(7)V99',PICOUT='ZZZ.ZZ9,99'
+         DFHMDF POS=(14,47),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='PL.SAUDE :'
+INDPS    DFHMDF POS=(14,58),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+VLRPS    DFHMDF POS=(14,60),LENGTH=09,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
+               PICIN='9(7)V99',PICOUT='ZZZ.ZZ9,99'
+         DFHMDF POS=(14,70),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(15,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='PENSAO % :'
+PERPEN   DFHMDF POS=(15,12),LENGTH=05,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
+               PICIN='9(3)V99',PICOUT='ZZ9,99'
+         DFHMDF POS=(15,18),LENGTH=13,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='PENSAO FIXA:'
+VLRPEN   DFHMDF POS=(15,32),LENGTH=09,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
+               PICIN='9(7)V99',PICOUT='ZZZ.ZZ9,99'
+         DFHMDF POS=(15,42),LENGTH=12,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='CONSIGNADO :'
+VLRCON   DFHMDF POS=(15,55),LENGTH=09,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
+               PICIN='9(7)V99',PICOUT='ZZZ.ZZ9,99'
+         DFHMDF POS=(15,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+***********************************************************************
+* DADOS BANCARIOS                                                     *
+***********************************************************************
+         DFHMDF POS=(17,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='BANCO    :'
+BANCO    DFHMDF POS=(17,12),LENGTH=03,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(17,16),LENGTH=09,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='AGENCIA :'
+AGENCIA  DFHMDF POS=(17,26),LENGTH=05,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(17,32),LENGTH=08,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='CONTA  :'
+CONTA    DFHMDF POS=(17,41),LENGTH=12,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(17,54),LENGTH=02,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='-'
+DIGCTA   DFHMDF POS=(17,57),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(17,59),LENGTH=01,ATTRB=(ASKIP,NORM)
+***********************************************************************
+* AREA DE MENSAGENS E TECLAS DE FUNCAO                                *
+***********************************************************************
+         DFHMDF POS=(20,01),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,                                             X
+               INITIAL='-----------------------------------------------X
+               --------------------------------'
+MENSAG   DFHMDF POS=(21,01),LENGTH=79,ATTRB=(PROT,BRT),                X
+               COLOR=RED
+         DFHMDF POS=(23,01),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=YELLOW,                                           X
+               INITIAL='F3=SAIR  F4=LISTA  F5=CONSULTAR  F6=GRAVAR  F8=X
+               DEPENDENTES  F9=PESSOAIS  F12=CANCELAR'
+         DFHMDF POS=(24,01),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE
+***********************************************************************
+* MAPA    : MAPEMP2 - SEGUNDA TELA (DADOS PESSOAIS E ENDERECO)        *
+* CHAMADO : F9 A PARTIR DE MAPEMP; F9 VOLTA PARA MAPEMP               *
+***********************************************************************
+MAPEMP2  DFHMDI SIZE=(24,80),                                          X
+               LINE=1,                                                 X
+               COLUMN=1
+***********************************************************************
+         DFHMDF POS=(01,01),LENGTH=07,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,INITIAL='SFP0100'
+         DFHMDF POS=(01,20),LENGTH=46,ATTRB=(PROT,BRT),                X
+               COLOR=NEUTRAL,                                          X
+               INITIAL='SISTEMA DE FOLHA DE PAGAMENTO - DADOS PESSOAIS'
+DATA2    DFHMDF POS=(01,70),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE
+         DFHMDF POS=(02,01),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,                                             X
+               INITIAL='-----------------------------------------------X
+               --------------------------------'
+         DFHMDF POS=(03,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='MATRICULA:'
+MATRI2   DFHMDF POS=(03,12),LENGTH=08,ATTRB=(PROT,NORM),               X
+               COLOR=TURQUOISE
+         DFHMDF POS=(03,21),LENGTH=05,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='NOME:'
+NOME2    DFHMDF POS=(03,27),LENGTH=40,ATTRB=(PROT,NORM),               X
+               COLOR=TURQUOISE
+         DFHMDF POS=(05,01),LENGTH=05,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='SEXO:'
+SEXO     DFHMDF POS=(05,07),LENGTH=01,ATTRB=(UNPROT,NORM,IC),          X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DSEXO    DFHMDF POS=(05,09),LENGTH=09,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(05,19),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='EST.CIVIL:'
+ECIV     DFHMDF POS=(05,30),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DECIV    DFHMDF POS=(05,32),LENGTH=11,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(05,44),LENGTH=05,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='RACA:'
+RACA     DFHMDF POS=(05,50),LENGTH=02,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DRACA    DFHMDF POS=(05,53),LENGTH=11,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(06,01),LENGTH=12,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='NACIONALID.:'
+NACION   DFHMDF POS=(06,14),LENGTH=03,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DNACIO   DFHMDF POS=(06,18),LENGTH=18,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(06,37),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='INSTRUCAO:'
+INSTRU   DFHMDF POS=(06,48),LENGTH=02,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DINSTR   DFHMDF POS=(06,51),LENGTH=18,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(07,01),LENGTH=09,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='UF NASC.:'
+UFNASC   DFHMDF POS=(07,11),LENGTH=02,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DUFNAS   DFHMDF POS=(07,14),LENGTH=15,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(07,30),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='MUN.NASC.:'
+MUNNAS   DFHMDF POS=(07,41),LENGTH=07,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DMUNNA   DFHMDF POS=(07,49),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(08,01),LENGTH=09,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='NOME MAE:'
+NOMEMA   DFHMDF POS=(08,11),LENGTH=40,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(08,52),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(09,01),LENGTH=11,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='DEFICIENTE:'
+DEFIC    DFHMDF POS=(09,13),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(09,15),LENGTH=05,ATTRB=(PROT,NORM),               X
+               COLOR=YELLOW,INITIAL='(S/N)'
+         DFHMDF POS=(09,21),LENGTH=05,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='TIPO:'
+TPDEF    DFHMDF POS=(09,27),LENGTH=02,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DTPDEF   DFHMDF POS=(09,30),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(11,01),LENGTH=09,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='CTPS Nr.:'
+CTPSNR   DFHMDF POS=(11,11),LENGTH=08,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(11,20),LENGTH=06,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='SERIE:'
+CTPSSE   DFHMDF POS=(11,27),LENGTH=05,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(11,33),LENGTH=03,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='UF:'
+CTPSUF   DFHMDF POS=(11,37),LENGTH=02,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(11,40),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(12,01),LENGTH=03,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='RG:'
+RGNUM    DFHMDF POS=(12,05),LENGTH=15,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(12,21),LENGTH=06,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='ORGAO:'
+RGORG    DFHMDF POS=(12,28),LENGTH=08,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(12,37),LENGTH=12,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='TIT.ELEITOR:'
+TITELE   DFHMDF POS=(12,50),LENGTH=12,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(12,63),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(14,01),LENGTH=09,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='TP.LOGR.:'
+TPLOGR   DFHMDF POS=(14,11),LENGTH=03,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DTPLOG   DFHMDF POS=(14,15),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(14,26),LENGTH=11,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='LOGRADOURO:'
+LOGRAD   DFHMDF POS=(14,38),LENGTH=40,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(14,79),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(15,01),LENGTH=07,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='NUMERO:'
+NUMERO   DFHMDF POS=(15,09),LENGTH=08,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(15,18),LENGTH=12,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='COMPLEMENTO:'
+COMPLE   DFHMDF POS=(15,31),LENGTH=15,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(15,47),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(16,01),LENGTH=07,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='BAIRRO:'
+BAIRRO   DFHMDF POS=(16,09),LENGTH=25,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(16,35),LENGTH=04,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='CEP:'
+CEP      DFHMDF POS=(16,40),LENGTH=08,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(16,49),LENGTH=01,ATTRB=(ASKIP,NORM)
+         DFHMDF POS=(17,01),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='MUNICIPIO:'
+MUNIC    DFHMDF POS=(17,12),LENGTH=07,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DMUNIC   DFHMDF POS=(17,20),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(17,41),LENGTH=03,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='UF:'
+UF       DFHMDF POS=(17,45),LENGTH=02,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DUF      DFHMDF POS=(17,48),LENGTH=12,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(18,01),LENGTH=09,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='TELEFONE:'
+TELEF    DFHMDF POS=(18,11),LENGTH=14,ATTRB=(UNPROT,NORM),             X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+         DFHMDF POS=(18,26),LENGTH=11,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='ESTABELEC.:'
+ESTAB    DFHMDF POS=(18,38),LENGTH=04,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DESTAB   DFHMDF POS=(18,43),LENGTH=20,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(19,01),LENGTH=08,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='VINCULO:'
+VINCUL   DFHMDF POS=(19,10),LENGTH=02,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DVINC    DFHMDF POS=(19,13),LENGTH=12,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(19,26),LENGTH=08,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='JORNADA:'
+JORNAD   DFHMDF POS=(19,35),LENGTH=02,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DJORN    DFHMDF POS=(19,38),LENGTH=12,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+         DFHMDF POS=(19,51),LENGTH=08,ATTRB=(PROT,NORM),               X
+               COLOR=GREEN,INITIAL='HORARIO:'
+HORARI   DFHMDF POS=(19,60),LENGTH=03,ATTRB=(UNPROT,NUM),              X
+               COLOR=TURQUOISE,HILIGHT=UNDERLINE
+DHORAR   DFHMDF POS=(19,64),LENGTH=10,ATTRB=(PROT,NORM),               X
+               COLOR=NEUTRAL
+***********************************************************************
+* AREA DE MENSAGENS E TECLAS DE FUNCAO                                *
+***********************************************************************
+         DFHMDF POS=(20,01),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE,                                             X
+               INITIAL='-----------------------------------------------X
+               --------------------------------'
+MENSA2   DFHMDF POS=(21,01),LENGTH=79,ATTRB=(PROT,BRT),                X
+               COLOR=RED
+         DFHMDF POS=(23,01),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=YELLOW,                                           X
+               INITIAL='F3=SAIR  F4=LISTA  F6=GRAVAR  F9=CONTRATO  F12=X
+               CANCELAR  ENTER=CONFIRMAR'
+         DFHMDF POS=(24,01),LENGTH=79,ATTRB=(PROT,NORM),               X
+               COLOR=BLUE
+         DFHMSD TYPE=FINAL
+         END
