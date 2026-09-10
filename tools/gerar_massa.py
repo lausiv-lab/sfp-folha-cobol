@@ -15,11 +15,12 @@
    SFPEVE.DAT   80 bytes  Cadastro de eventos         (SFPWEVE)
    SFPTAB.DAT   80 bytes  Tabelas legais/parametros   (SFPWTAB)
    SYSIN.DAT    80 bytes  Cartao de parametro do JOB
+   SYSIN400.DAT 80 bytes  Cartao de controle do SFP0400
 
  Todos os dados sao ficticios e gerados com semente fixa (reprodutivel).
 =============================================================================
 """
-import random, os, sys
+import random, os, sys, calendar
 
 random.seed(20260909)
 DEST = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dados')
@@ -415,4 +416,10 @@ if __name__ == '__main__':
     escrever('SYSIN.DAT', [ (COMPETENCIA + " 1 " + "000000" + " " +
                              "999999" + " " + "N" + " " +
                              f"{ANO}{MES:02d}05").ljust(80) ], 80)
+    # Cartao do SFP0400: lancamento contabil no ultimo dia da
+    # competencia, lote 1, com geracao de provisoes.
+    ult = calendar.monthrange(ANO, MES)[1]
+    escrever('SYSIN400.DAT', [ (COMPETENCIA + " 1 " +
+                               f"{ANO}{MES:02d}{ult:02d}" + " " +
+                               "000001" + " " + "S").ljust(80) ], 80)
     print("Massa gerada em:", DEST)

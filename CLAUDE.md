@@ -6,11 +6,15 @@ mainframe, exige tradutor CICS e precompilador DB2), JCL e PROCs.
 
 ## Comandos
 
+`dados/`, `saidas/` e os executaveis de `build/` nao sao
+versionados. Em clone novo, gere a massa antes de compilar:
+`gerar_massa.py`, `gerar_dominios.py`, `build.sh`, `run.sh`.
+
 ```bash
-./build/build.sh              # compila os modulos batch
-./build/run.sh                # roda a cadeia mensal completa
-python3 tools/gerar_massa.py      # regera a massa de empregados
-python3 tools/gerar_dominios.py   # regera dominios e cadastros de apoio
+python3 tools/gerar_massa.py      # gera a massa de empregados
+python3 tools/gerar_dominios.py   # gera dominios e cadastros de apoio
+./build/build.sh                  # compila os modulos batch
+./build/run.sh                    # roda a cadeia mensal completa
 python3 tools/gerar_dicionario.py # regera docs/DICIONARIO-DADOS.md
 python3 tools/gerar_bms.py        # regera os mapsets BMS de grade
 python3 tools/auditar.py          # confere os calculos por fora
@@ -92,8 +96,8 @@ programas sem codigo de calculo em comum. Se divergirem, ha erro.
 | `bms/` | fontes dos mapas |
 | `dclgen/` `ddl/` `sql/` `ctl/` | camada DB2 |
 | `jcl/` `proc/` | jobs e procedures |
-| `dados/` | massa ficticia (semente fixa) |
-| `saidas/` | resultados da execucao |
+| `dados/` | massa ficticia (semente fixa, nao versionada) |
+| `saidas/` | resultados da execucao (nao versionados) |
 | `tools/` | geradores Python |
 | `docs/` | docs de arquitetura, regras, operacao e ambiente |
 

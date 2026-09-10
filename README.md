@@ -25,27 +25,38 @@ precompilador DB2, indisponiveis fora do z/OS.
 
 | Programa | Resultado | RC |
 |---|---|---|
-| `SFP0200` critica | 68 lidos, 64 aceitos, 4 rejeitados | 04 |
-| `SFP0300` calculo | 60 calculados, 695 eventos, 7 criticas | 04 |
-| `SFP0350` rescisao | 1 TRCT emitido | 00 |
-| `SFP0400` contabil | 190 partidas, debito igual a credito | 00 |
-| `SFP0500` holerite | 60 contracheques em 27 paginas | 00 |
-| `SFP0600` CNAB240 | 64 registros de 240 bytes | 00 |
+| `SFP0200` critica | 70 lidos, 61 aceitos, 9 rejeitados | 04 |
+| `SFP0300` calculo | 60 calculados, 704 eventos, 5 criticas | 04 |
+| `SFP0350` rescisao | 4 rescisoes calculadas | 00 |
+| `SFP0400` contabil | 189 partidas, debito igual a credito | 00 |
+| `SFP0500` holerite | 60 contracheques em 28 paginas | 00 |
+| `SFP0600` CNAB240 | 64 registros de 240 bytes, 60 segmentos A | 00 |
 
 **Triangulacao independente:** o liquido do resumo, o saldo
 credor da conta contabil de folha a pagar e o total da remessa
-bancaria fecham nos mesmos **R$ 278.548,14**, apurados por tres
+bancaria fecham nos mesmos **R$ 279.148,20**, apurados por tres
 programas que nao compartilham codigo de calculo.
 
 ## Comecando
 
+A massa de dados nao e versionada: `dados/` vem vazia no clone e
+precisa ser gerada antes da primeira compilacao. Os geradores usam
+semente fixa, portanto produzem sempre o mesmo conteudo.
+
 ```bash
-./build/build.sh      # compila os modulos batch
-./build/run.sh        # executa a cadeia completa
+python3 tools/gerar_massa.py      # gera a massa de empregados
+python3 tools/gerar_dominios.py   # gera dominios e cadastros de apoio
+./build/build.sh                  # compila os modulos batch
+./build/run.sh                    # executa a cadeia completa
 ```
 
+Nas execucoes seguintes bastam os dois ultimos comandos, ou apenas
+`./build/run.sh` enquanto os fontes COBOL nao mudarem.
+
 As saidas aparecem em `saidas/`: holerites, remessa bancaria,
-termo de rescisao, razao contabil e logs de critica.
+termo de rescisao, razao contabil e logs de critica. Assim como
+`dados/` e os executaveis de `build/`, elas ficam fora do
+versionamento por serem reproduziveis.
 
 ## Onde olhar primeiro
 
