@@ -1,0 +1,175 @@
+--*****************************************************************
+--* MEMBRO   : SFPDDL04                                           *
+--* FUNCAO   : TABELAS DOS CADASTROS DE APOIO (EQUIVALENTE VSAM)  *
+--*****************************************************************
+--* AS TABELAS ABAIXO REPRODUZEM, EM DB2, OS CADASTROS QUE HOJE   *
+--* VIVEM EM VSAM E SAO MANTIDOS PELAS TELAS SFP0130, SFP0140 E   *
+--* SFP0160. A ORIGEM DE CADA COLUNA E O COPYBOOK CITADO NO       *
+--* CABECALHO DE CADA CREATE TABLE. OS CAMPOS FILLER NAO SAO      *
+--* MAPEADOS, COMO JA OCORRE EM TB_EVENTO (SFPDDL02).             *
+--* O CADASTRO DE RUBRICAS (SFPEVE) NAO ENTRA AQUI: SEU           *
+--* EQUIVALENTE E TB_EVENTO, CRIADA NO SFPDDL02.                  *
+--*****************************************************************
+
+--=================================================================
+-- TB_UF - UNIDADES DA FEDERACAO           (COPYBOOK SFPWUFE)
+--=================================================================
+CREATE TABLE SFPADM.TB_UF
+   (UF                   CHAR(02)       NOT NULL,
+    NOME                 CHAR(25)       NOT NULL,
+    COD_IBGE             SMALLINT       NOT NULL WITH DEFAULT 0,
+    REGIAO               CHAR(12)       NOT NULL WITH DEFAULT,
+    CAPITAL              CHAR(25)       NOT NULL WITH DEFAULT,
+    ALIQ_ICMS            DECIMAL(4,2)   NOT NULL WITH DEFAULT 0,
+    SITUACAO             CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    PRIMARY KEY (UF),
+    CONSTRAINT CK_UFE_SIT  CHECK (SITUACAO IN ('A','I'))
+   )
+   IN DBSFP001.TSSFPCAD;
+
+--=================================================================
+-- TB_MUNICIPIO - MUNICIPIOS DO IBGE       (COPYBOOK SFPWMUN)
+--=================================================================
+CREATE TABLE SFPADM.TB_MUNICIPIO
+   (COD_IBGE             DECIMAL(7,0)   NOT NULL,
+    UF                   CHAR(02)       NOT NULL,
+    NOME                 CHAR(40)       NOT NULL,
+    COD_SIAFI            SMALLINT       NOT NULL WITH DEFAULT 0,
+    IND_CAPITAL          CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    CEP_INICIAL          DECIMAL(8,0)   NOT NULL WITH DEFAULT 0,
+    CEP_FINAL            DECIMAL(8,0)   NOT NULL WITH DEFAULT 0,
+    SITUACAO             CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    PRIMARY KEY (COD_IBGE),
+    CONSTRAINT FK_MUN_UFE FOREIGN KEY (UF)
+        REFERENCES SFPADM.TB_UF (UF),
+    CONSTRAINT CK_MUN_CAP  CHECK (IND_CAPITAL IN ('S','N')),
+    CONSTRAINT CK_MUN_SIT  CHECK (SITUACAO IN ('A','I'))
+   )
+   IN DBSFP001.TSSFPCAD;
+
+--=================================================================
+-- TB_ESTABELEC - EMPRESA E ESTABELECIMENTOS (COPYBOOK SFPWEST)
+--=================================================================
+-- DT_INICIO_ATIV ADMITE NULO: A INCLUSAO PELO SFP0130 NAO PEDE A
+-- DATA E O CAMPO FICA ZERADO NO VSAM (VER DOCS/PENDENCIAS ITEM 3).
+--=================================================================
+CREATE TABLE SFPADM.TB_ESTABELEC
+   (COD_ESTABELEC        SMALLINT       NOT NULL,
+    TIPO_ESTABELEC       CHAR(01)       NOT NULL WITH DEFAULT 'F',
+    CNPJ                 DECIMAL(14,0)  NOT NULL,
+    RAZAO_SOCIAL         CHAR(60)       NOT NULL,
+    NOME_FANTASIA        CHAR(40)       NOT NULL WITH DEFAULT,
+    INSC_ESTADUAL        CHAR(15)       NOT NULL WITH DEFAULT,
+    INSC_MUNICIPAL       CHAR(15)       NOT NULL WITH DEFAULT,
+    TIPO_LOGRADOURO      CHAR(03)       NOT NULL WITH DEFAULT,
+    LOGRADOURO           CHAR(40)       NOT NULL WITH DEFAULT,
+    NUMERO               CHAR(08)       NOT NULL WITH DEFAULT,
+    COMPLEMENTO          CHAR(15)       NOT NULL WITH DEFAULT,
+    BAIRRO               CHAR(25)       NOT NULL WITH DEFAULT,
+    COD_MUNICIPIO        DECIMAL(7,0)   NOT NULL WITH DEFAULT 0,
+    UF                   CHAR(02)       NOT NULL WITH DEFAULT,
+    CEP                  DECIMAL(8,0)   NOT NULL WITH DEFAULT 0,
+    TELEFONE             CHAR(14)       NOT NULL WITH DEFAULT,
+    EMAIL                CHAR(40)       NOT NULL WITH DEFAULT,
+    CNAE                 DECIMAL(7,0)   NOT NULL WITH DEFAULT 0,
+    COD_FPAS             SMALLINT       NOT NULL WITH DEFAULT 0,
+    COD_TERCEIROS        SMALLINT       NOT NULL WITH DEFAULT 0,
+    ALIQ_RAT             DECIMAL(4,2)   NOT NULL WITH DEFAULT 0,
+    FAP                  DECIMAL(5,4)   NOT NULL WITH DEFAULT 1,
+    ALIQ_TERCEIROS       DECIMAL(4,2)   NOT NULL WITH DEFAULT 0,
+    IND_SIMPLES          CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    IND_DESONERACAO      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    CNPJ_SINDICATO       DECIMAL(14,0)  NOT NULL WITH DEFAULT 0,
+    NOME_SINDICATO       CHAR(40)       NOT NULL WITH DEFAULT,
+    MES_DATA_BASE        SMALLINT       NOT NULL WITH DEFAULT 0,
+    PERC_CONTR_SIND      DECIMAL(5,2)   NOT NULL WITH DEFAULT 0,
+    DIA_PAGAMENTO        SMALLINT       NOT NULL WITH DEFAULT 5,
+    DIA_ADIANTAMENTO     SMALLINT       NOT NULL WITH DEFAULT 20,
+    BANCO_PAGADOR        SMALLINT       NOT NULL WITH DEFAULT 0,
+    AGENCIA_PAGADORA     DECIMAL(5,0)   NOT NULL WITH DEFAULT 0,
+    CONTA_PAGADORA       DECIMAL(12,0)  NOT NULL WITH DEFAULT 0,
+    DIG_CONTA            CHAR(01)       NOT NULL WITH DEFAULT '0',
+    COD_CONVENIO         CHAR(20)       NOT NULL WITH DEFAULT,
+    DT_INICIO_ATIV       DATE                        ,
+    SITUACAO             CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    PRIMARY KEY (COD_ESTABELEC),
+    CONSTRAINT CK_EST_TIPO CHECK (TIPO_ESTABELEC IN ('M','F')),
+    CONSTRAINT CK_EST_SIT  CHECK (SITUACAO IN ('A','I')),
+    CONSTRAINT CK_EST_CNPJ CHECK (CNPJ > 0),
+    CONSTRAINT CK_EST_FAP  CHECK (FAP BETWEEN 0.5000 AND 2.0000)
+   )
+   IN DBSFP001.TSSFPCAD
+   AUDIT CHANGES;
+
+--=================================================================
+-- TB_DEPARTAMENTO - LOTACAO E CENTRO DE CUSTO (COPYBOOK SFPWDPT)
+--=================================================================
+-- DPT_SUPERIOR E MATR_RESPONSAVEL NAO TEM CHAVE ESTRANGEIRA: A
+-- MASSA APONTA DEPARTAMENTO SUPERIOR FORA DO CADASTRO E DEIXA A
+-- MATRICULA DO RESPONSAVEL ZERADA.
+--=================================================================
+CREATE TABLE SFPADM.TB_DEPARTAMENTO
+   (COD_DEPTO            SMALLINT       NOT NULL,
+    DESCRICAO            CHAR(35)       NOT NULL,
+    CENTRO_CUSTO         DECIMAL(6,0)   NOT NULL,
+    COD_ESTABELEC        SMALLINT       NOT NULL,
+    MATR_RESPONSAVEL     DECIMAL(8,0)   NOT NULL WITH DEFAULT 0,
+    DPT_SUPERIOR         SMALLINT       NOT NULL WITH DEFAULT 0,
+    CONTA_CONTABIL       DECIMAL(8,0)   NOT NULL WITH DEFAULT 0,
+    IND_RATEIO           CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    DT_CRIACAO           DATE           NOT NULL WITH DEFAULT,
+    SITUACAO             CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    PRIMARY KEY (COD_DEPTO),
+    CONSTRAINT FK_DPT_EST FOREIGN KEY (COD_ESTABELEC)
+        REFERENCES SFPADM.TB_ESTABELEC (COD_ESTABELEC),
+    CONSTRAINT CK_DPT_RAT  CHECK (IND_RATEIO IN ('S','N')),
+    CONSTRAINT CK_DPT_SIT  CHECK (SITUACAO IN ('A','I'))
+   )
+   IN DBSFP001.TSSFPCAD;
+
+--=================================================================
+-- TB_CARGO - CARGOS, PISO E TETO SALARIAL (COPYBOOK SFPWCAR)
+--=================================================================
+CREATE TABLE SFPADM.TB_CARGO
+   (COD_CARGO            SMALLINT       NOT NULL,
+    DESCRICAO            CHAR(35)       NOT NULL,
+    CBO                  DECIMAL(6,0)   NOT NULL WITH DEFAULT 0,
+    NIVEL                CHAR(01)       NOT NULL WITH DEFAULT 'O',
+    PISO_SALARIAL        DECIMAL(11,2)  NOT NULL WITH DEFAULT 0,
+    TETO_SALARIAL        DECIMAL(11,2)  NOT NULL WITH DEFAULT 0,
+    CARGA_HOR_MES        SMALLINT       NOT NULL WITH DEFAULT 220,
+    IND_INSALUBRID       CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    PERC_INSALUBRID      SMALLINT       NOT NULL WITH DEFAULT 0,
+    IND_PERICULOSID      CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    IND_CONFIANCA        CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    COD_CBO_FAMILIA      SMALLINT       NOT NULL WITH DEFAULT 0,
+    DT_CRIACAO           DATE           NOT NULL WITH DEFAULT,
+    SITUACAO             CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    PRIMARY KEY (COD_CARGO),
+    CONSTRAINT CK_CAR_NIV  CHECK (NIVEL IN ('O','T','E','G','D')),
+    CONSTRAINT CK_CAR_SIT  CHECK (SITUACAO IN ('A','E')),
+    CONSTRAINT CK_CAR_TETO CHECK (TETO_SALARIAL >= PISO_SALARIAL)
+   )
+   IN DBSFP001.TSSFPCAD;
+
+--=================================================================
+-- TB_DOMINIO - TABELA GENERICA DE DOMINIOS (COPYBOOK SFPWDOM)
+--=================================================================
+-- O TIPO 'TIP' E O META-DOMINIO: SEUS REGISTROS SAO OS PROPRIOS
+-- TIPOS DAS DEMAIS LINHAS, POR ISSO NAO HA CHECK SOBRE
+-- TIPO_DOMINIO NEM TABELA SEPARADA DE TIPOS.
+--=================================================================
+CREATE TABLE SFPADM.TB_DOMINIO
+   (TIPO_DOMINIO         CHAR(03)       NOT NULL,
+    COD_DOMINIO          CHAR(06)       NOT NULL,
+    DESCRICAO            CHAR(35)       NOT NULL,
+    DESCR_REDUZ          CHAR(12)       NOT NULL WITH DEFAULT,
+    ORDEM                SMALLINT       NOT NULL WITH DEFAULT 0,
+    VALOR_AUX            CHAR(10)       NOT NULL WITH DEFAULT,
+    SITUACAO             CHAR(01)       NOT NULL WITH DEFAULT 'A',
+    IND_SISTEMA          CHAR(01)       NOT NULL WITH DEFAULT 'N',
+    PRIMARY KEY (TIPO_DOMINIO, COD_DOMINIO),
+    CONSTRAINT CK_DOM_SIT  CHECK (SITUACAO IN ('A','I')),
+    CONSTRAINT CK_DOM_SIS  CHECK (IND_SISTEMA IN ('S','N'))
+   )
+   IN DBSFP001.TSSFPCAD;
