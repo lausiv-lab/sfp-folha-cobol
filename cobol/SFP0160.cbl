@@ -51,9 +51,11 @@
       *  RN07 - ALTERACAO E EXCLUSAO EXIGEM DOMINIO JA CADASTRADO      *
       *  RN08 - DOMINIO DE SISTEMA NAO ACEITA ALTERACAO NEM EXCLUSAO   *
       *----------------------------------------------------------------*
-      * DOM-IND-SISTEMA NAO TEM COLUNA NO MAPA SFPM06: NA INCLUSAO     *
-      * RECEBE N E NA ALTERACAO E PRESERVADO. QUEM PRECISA MARCAR UM   *
-      * DOMINIO COMO DE SISTEMA FAZ ISSO EM tools/gerar_dominios.py.   *
+      * DOM-IND-SISTEMA APARECE NA COLUNA SIS DO MAPA SFPM06, QUE E    *
+      * PROTEGIDA: NA INCLUSAO O INDICADOR RECEBE N E NA ALTERACAO E   *
+      * PRESERVADO. QUEM PRECISA MARCAR UM DOMINIO COMO DE SISTEMA     *
+      * FAZ ISSO EM tools/gerar_dominios.py. A COLUNA EXISTE PARA A    *
+      * RN08 NAO SER UMA SURPRESA NO MOMENTO DA RECUSA.                *
       * A REDUZIDA OMITIDA NA INCLUSAO SAI DOS 12 PRIMEIROS            *
       * CARACTERES DA DESCRICAO E A SITUACAO OMITIDA SAI COMO A.       *
       *================================================================*
@@ -96,6 +98,7 @@
                10  WS-LN-ORDEM     PIC 9(003).
                10  WS-LN-AUX       PIC X(010).
                10  WS-LN-SIT       PIC X(001).
+               10  WS-LN-SIS       PIC X(003).
                10  WS-LN-DES-INF   PIC X(001).
                10  WS-LN-RED-INF   PIC X(001).
                10  WS-LN-ORD-INF   PIC X(001).
@@ -540,6 +543,7 @@
                                           WS-LN-REDUZ(WS-IX)
                                           WS-LN-AUX(WS-IX)
                                           WS-LN-SIT(WS-IX)
+                                          WS-LN-SIS(WS-IX)
            MOVE 'N'                    TO WS-LN-DES-INF(WS-IX)
                                           WS-LN-RED-INF(WS-IX)
                                           WS-LN-ORD-INF(WS-IX)
@@ -801,6 +805,11 @@
            MOVE DOM-ORDEM              TO WS-LN-ORDEM(WS-IY)
            MOVE DOM-VALOR-AUX          TO WS-LN-AUX(WS-IY)
            MOVE DOM-SITUACAO           TO WS-LN-SIT(WS-IY)
+           IF DOM-IND-SISTEMA = 'S'
+               MOVE 'SIS'              TO WS-LN-SIS(WS-IY)
+           ELSE
+               MOVE SPACES             TO WS-LN-SIS(WS-IY)
+           END-IF
            MOVE 'N'                    TO WS-LN-DES-INF(WS-IY)
                                           WS-LN-RED-INF(WS-IY)
                                           WS-LN-ORD-INF(WS-IY)
@@ -1275,7 +1284,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED1O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD1O
            MOVE WS-LN-AUX(WS-IX)       TO AUX1O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT1O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT1O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS1O.
        6010-FIM.
            EXIT.
       *
@@ -1287,7 +1297,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED2O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD2O
            MOVE WS-LN-AUX(WS-IX)       TO AUX2O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT2O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT2O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS2O.
        6011-FIM.
            EXIT.
       *
@@ -1299,7 +1310,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED3O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD3O
            MOVE WS-LN-AUX(WS-IX)       TO AUX3O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT3O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT3O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS3O.
        6012-FIM.
            EXIT.
       *
@@ -1311,7 +1323,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED4O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD4O
            MOVE WS-LN-AUX(WS-IX)       TO AUX4O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT4O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT4O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS4O.
        6013-FIM.
            EXIT.
       *
@@ -1323,7 +1336,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED5O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD5O
            MOVE WS-LN-AUX(WS-IX)       TO AUX5O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT5O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT5O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS5O.
        6014-FIM.
            EXIT.
       *
@@ -1335,7 +1349,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED6O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD6O
            MOVE WS-LN-AUX(WS-IX)       TO AUX6O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT6O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT6O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS6O.
        6015-FIM.
            EXIT.
       *
@@ -1347,7 +1362,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED7O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD7O
            MOVE WS-LN-AUX(WS-IX)       TO AUX7O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT7O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT7O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS7O.
        6016-FIM.
            EXIT.
       *
@@ -1359,7 +1375,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED8O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD8O
            MOVE WS-LN-AUX(WS-IX)       TO AUX8O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT8O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT8O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS8O.
        6017-FIM.
            EXIT.
       *
@@ -1371,7 +1388,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO RED9O
            MOVE WS-LN-ORDEM(WS-IX)     TO ORD9O
            MOVE WS-LN-AUX(WS-IX)       TO AUX9O
-           MOVE WS-LN-SIT(WS-IX)       TO SIT9O.
+           MOVE WS-LN-SIT(WS-IX)       TO SIT9O
+           MOVE WS-LN-SIS(WS-IX)       TO SIS9O.
        6018-FIM.
            EXIT.
       *
@@ -1383,7 +1401,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO REDAO
            MOVE WS-LN-ORDEM(WS-IX)     TO ORDAO
            MOVE WS-LN-AUX(WS-IX)       TO AUXAO
-           MOVE WS-LN-SIT(WS-IX)       TO SITAO.
+           MOVE WS-LN-SIT(WS-IX)       TO SITAO
+           MOVE WS-LN-SIS(WS-IX)       TO SISAO.
        6019-FIM.
            EXIT.
       *
@@ -1395,7 +1414,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO REDBO
            MOVE WS-LN-ORDEM(WS-IX)     TO ORDBO
            MOVE WS-LN-AUX(WS-IX)       TO AUXBO
-           MOVE WS-LN-SIT(WS-IX)       TO SITBO.
+           MOVE WS-LN-SIT(WS-IX)       TO SITBO
+           MOVE WS-LN-SIS(WS-IX)       TO SISBO.
        6020-FIM.
            EXIT.
       *
@@ -1407,7 +1427,8 @@
            MOVE WS-LN-REDUZ(WS-IX)     TO REDCO
            MOVE WS-LN-ORDEM(WS-IX)     TO ORDCO
            MOVE WS-LN-AUX(WS-IX)       TO AUXCO
-           MOVE WS-LN-SIT(WS-IX)       TO SITCO.
+           MOVE WS-LN-SIT(WS-IX)       TO SITCO
+           MOVE WS-LN-SIS(WS-IX)       TO SISCO.
        6021-FIM.
            EXIT.
       *

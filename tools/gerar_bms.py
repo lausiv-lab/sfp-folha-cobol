@@ -86,6 +86,21 @@ def campo(nome, lin, col, tam, prot=False, cor='GREEN',
     return out
 
 
+def faixa_grade(colunas, tracejado=False):
+    """Monta o cabecalho ou o tracejado de uma grade.
+
+    Recebe as colunas como (coluna do primeiro byte de dado,
+    largura, titulo) e devolve o literal para rotulo(lin, 1, ...),
+    que comeca na coluna 2. Assim titulo, tracejado e campo saem
+    da mesma fonte e nao ha como desalinhar."""
+    buf = [' '] * 79
+    for col, larg, titulo in colunas:
+        texto = '-' * larg if tracejado else titulo[:larg]
+        for i, ch in enumerate(texto):
+            buf[col - 2 + i] = ch
+    return ''.join(buf).rstrip()
+
+
 def simbolico(mapset, mapa, campos, destino):
     L = []
     L.append("      *" + "=" * 64 + "*")
@@ -192,19 +207,31 @@ L += campo('MTIPO', 2, 18, 3, ic=True)
 L += campo('MDESTIP', 2, 24, 35, prot=True, cor='TURQUOISE')
 L += rotulo(2, 62, 'F4=LISTA TIPOS')
 L += rotulo(3, 1, '-' * 79)
-L += rotulo(4, 1, 'A CODIGO DESCRICAO                        '
-                  'REDUZIDA     ORD AUXILIAR   S')
-L += rotulo(5, 1, '- ------ ----------------------------------- '
-                  '------------ --- ---------- -')
+# a coluna SIS marca o dominio de sistema, que a RN08 protege;
+# sem ela o usuario so descobria a protecao quando o SFP0160
+# recusava a acao
+COLUNAS_DOMINIO = [
+    ('ACAO', 2, 1, 'A'),
+    ('COD', 4, 6, 'CODIGO'),
+    ('DES', 11, 35, 'DESCRICAO'),
+    ('RED', 47, 12, 'REDUZIDA'),
+    ('ORD', 60, 3, 'ORD'),
+    ('AUX', 64, 10, 'AUXILIAR'),
+    ('SIT', 75, 1, 'S'),
+    ('SIS', 77, 3, 'SIS'),
+]
+L += rotulo(4, 1, faixa_grade([c[1:] for c in COLUNAS_DOMINIO]))
+L += rotulo(5, 1, faixa_grade([c[1:] for c in COLUNAS_DOMINIO], True))
 lin = 6
 for s in SUF:
-    L += campo(f'ACAO{s}', lin, 1, 1)
-    L += campo(f'COD{s}', lin, 3, 6)
-    L += campo(f'DES{s}', lin, 10, 35)
-    L += campo(f'RED{s}', lin, 46, 12)
-    L += campo(f'ORD{s}', lin, 59, 3)
-    L += campo(f'AUX{s}', lin, 63, 10)
-    L += campo(f'SIT{s}', lin, 74, 1)
+    # as colunas encostam umas nas outras: o atributo do campo
+    # seguinte ja fecha a area digitavel, e um stopper cairia na
+    # mesma POS dele
+    for pref, dado, larg, _ in COLUNAS_DOMINIO:
+        L += campo(f'{pref}{s}', lin, dado - 1, larg,
+                   prot=(pref == 'SIS'),
+                   cor='TURQUOISE' if pref == 'SIS' else 'GREEN',
+                   stop=False)
     lin += 1
 L += rotulo(19, 1, '-' * 79)
 L += rotulo(20, 3, 'ACAO: I=INCLUIR  A=ALTERAR  E=EXCLUIR    '
@@ -219,10 +246,8 @@ grava('SFPM06.bms', L)
 
 campos = [('MTIPO', 'X(003)'), ('MDESTIP', 'X(035)')]
 for s in SUF:
-    campos += [(f'ACAO{s}', 'X(001)'), (f'COD{s}', 'X(006)'),
-               (f'DES{s}', 'X(035)'), (f'RED{s}', 'X(012)'),
-               (f'ORD{s}', 'X(003)'), (f'AUX{s}', 'X(010)'),
-               (f'SIT{s}', 'X(001)')]
+    campos += [(f'{pref}{s}', f'X({larg:03d})')
+               for pref, _, larg, _ in COLUNAS_DOMINIO]
 campos += [('MPAG', 'X(003)'), ('MMENSAG', 'X(079)')]
 n = simbolico('SFPM06', 'MAPDOMI', campos,
               os.path.join(RAIZ, 'copy', 'SFPM06.cpy'))

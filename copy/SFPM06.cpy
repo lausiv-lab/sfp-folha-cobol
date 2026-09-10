@@ -49,6 +49,11 @@
            02  FILLER REDEFINES SIT1F.
                03 SIT1A            PIC X.
            02  SIT1I               PIC X(001).
+           02  SIS1L               PIC S9(004) COMP.
+           02  SIS1F               PIC X.
+           02  FILLER REDEFINES SIS1F.
+               03 SIS1A            PIC X.
+           02  SIS1I               PIC X(003).
            02  ACAO2L              PIC S9(004) COMP.
            02  ACAO2F              PIC X.
            02  FILLER REDEFINES ACAO2F.
@@ -84,6 +89,11 @@
            02  FILLER REDEFINES SIT2F.
                03 SIT2A            PIC X.
            02  SIT2I               PIC X(001).
+           02  SIS2L               PIC S9(004) COMP.
+           02  SIS2F               PIC X.
+           02  FILLER REDEFINES SIS2F.
+               03 SIS2A            PIC X.
+           02  SIS2I               PIC X(003).
            02  ACAO3L              PIC S9(004) COMP.
            02  ACAO3F              PIC X.
            02  FILLER REDEFINES ACAO3F.
@@ -119,6 +129,11 @@
            02  FILLER REDEFINES SIT3F.
                03 SIT3A            PIC X.
            02  SIT3I               PIC X(001).
+           02  SIS3L               PIC S9(004) COMP.
+           02  SIS3F               PIC X.
+           02  FILLER REDEFINES SIS3F.
+               03 SIS3A            PIC X.
+           02  SIS3I               PIC X(003).
            02  ACAO4L              PIC S9(004) COMP.
            02  ACAO4F              PIC X.
            02  FILLER REDEFINES ACAO4F.
@@ -154,6 +169,11 @@
            02  FILLER REDEFINES SIT4F.
                03 SIT4A            PIC X.
            02  SIT4I               PIC X(001).
+           02  SIS4L               PIC S9(004) COMP.
+           02  SIS4F               PIC X.
+           02  FILLER REDEFINES SIS4F.
+               03 SIS4A            PIC X.
+           02  SIS4I               PIC X(003).
            02  ACAO5L              PIC S9(004) COMP.
            02  ACAO5F              PIC X.
            02  FILLER REDEFINES ACAO5F.
@@ -189,6 +209,11 @@
            02  FILLER REDEFINES SIT5F.
                03 SIT5A            PIC X.
            02  SIT5I               PIC X(001).
+           02  SIS5L               PIC S9(004) COMP.
+           02  SIS5F               PIC X.
+           02  FILLER REDEFINES SIS5F.
+               03 SIS5A            PIC X.
+           02  SIS5I               PIC X(003).
            02  ACAO6L              PIC S9(004) COMP.
            02  ACAO6F              PIC X.
            02  FILLER REDEFINES ACAO6F.
@@ -224,6 +249,11 @@
            02  FILLER REDEFINES SIT6F.
                03 SIT6A            PIC X.
            02  SIT6I               PIC X(001).
+           02  SIS6L               PIC S9(004) COMP.
+           02  SIS6F               PIC X.
+           02  FILLER REDEFINES SIS6F.
+               03 SIS6A            PIC X.
+           02  SIS6I               PIC X(003).
            02  ACAO7L              PIC S9(004) COMP.
            02  ACAO7F              PIC X.
            02  FILLER REDEFINES ACAO7F.
@@ -259,6 +289,11 @@
            02  FILLER REDEFINES SIT7F.
                03 SIT7A            PIC X.
            02  SIT7I               PIC X(001).
+           02  SIS7L               PIC S9(004) COMP.
+           02  SIS7F               PIC X.
+           02  FILLER REDEFINES SIS7F.
+               03 SIS7A            PIC X.
+           02  SIS7I               PIC X(003).
            02  ACAO8L              PIC S9(004) COMP.
            02  ACAO8F              PIC X.
            02  FILLER REDEFINES ACAO8F.
@@ -294,6 +329,11 @@
            02  FILLER REDEFINES SIT8F.
                03 SIT8A            PIC X.
            02  SIT8I               PIC X(001).
+           02  SIS8L               PIC S9(004) COMP.
+           02  SIS8F               PIC X.
+           02  FILLER REDEFINES SIS8F.
+               03 SIS8A            PIC X.
+           02  SIS8I               PIC X(003).
            02  ACAO9L              PIC S9(004) COMP.
            02  ACAO9F              PIC X.
            02  FILLER REDEFINES ACAO9F.
@@ -329,6 +369,11 @@
            02  FILLER REDEFINES SIT9F.
                03 SIT9A            PIC X.
            02  SIT9I               PIC X(001).
+           02  SIS9L               PIC S9(004) COMP.
+           02  SIS9F               PIC X.
+           02  FILLER REDEFINES SIS9F.
+               03 SIS9A            PIC X.
+           02  SIS9I               PIC X(003).
            02  ACAOAL              PIC S9(004) COMP.
            02  ACAOAF              PIC X.
            02  FILLER REDEFINES ACAOAF.
@@ -364,6 +409,11 @@
            02  FILLER REDEFINES SITAF.
                03 SITAA            PIC X.
            02  SITAI               PIC X(001).
+           02  SISAL               PIC S9(004) COMP.
+           02  SISAF               PIC X.
+           02  FILLER REDEFINES SISAF.
+               03 SISAA            PIC X.
+           02  SISAI               PIC X(003).
            02  ACAOBL              PIC S9(004) COMP.
            02  ACAOBF              PIC X.
            02  FILLER REDEFINES ACAOBF.
@@ -399,6 +449,11 @@
            02  FILLER REDEFINES SITBF.
                03 SITBA            PIC X.
            02  SITBI               PIC X(001).
+           02  SISBL               PIC S9(004) COMP.
+           02  SISBF               PIC X.
+           02  FILLER REDEFINES SISBF.
+               03 SISBA            PIC X.
+           02  SISBI               PIC X(003).
            02  ACAOCL              PIC S9(004) COMP.
            02  ACAOCF              PIC X.
            02  FILLER REDEFINES ACAOCF.
@@ -434,6 +489,11 @@
            02  FILLER REDEFINES SITCF.
                03 SITCA            PIC X.
            02  SITCI               PIC X(001).
+           02  SISCL               PIC S9(004) COMP.
+           02  SISCF               PIC X.
+           02  FILLER REDEFINES SISCF.
+               03 SISCA            PIC X.
+           02  SISCI               PIC X(003).
            02  MPAGL               PIC S9(004) COMP.
            02  MPAGF               PIC X.
            02  FILLER REDEFINES MPAGF.
@@ -466,6 +526,8 @@
            02  FILLER              PIC X(003).
            02  SIT1O               PIC X(001).
            02  FILLER              PIC X(003).
+           02  SIS1O               PIC X(003).
+           02  FILLER              PIC X(003).
            02  ACAO2O              PIC X(001).
            02  FILLER              PIC X(003).
            02  COD2O               PIC X(006).
@@ -479,6 +541,8 @@
            02  AUX2O               PIC X(010).
            02  FILLER              PIC X(003).
            02  SIT2O               PIC X(001).
+           02  FILLER              PIC X(003).
+           02  SIS2O               PIC X(003).
            02  FILLER              PIC X(003).
            02  ACAO3O              PIC X(001).
            02  FILLER              PIC X(003).
@@ -494,6 +558,8 @@
            02  FILLER              PIC X(003).
            02  SIT3O               PIC X(001).
            02  FILLER              PIC X(003).
+           02  SIS3O               PIC X(003).
+           02  FILLER              PIC X(003).
            02  ACAO4O              PIC X(001).
            02  FILLER              PIC X(003).
            02  COD4O               PIC X(006).
@@ -507,6 +573,8 @@
            02  AUX4O               PIC X(010).
            02  FILLER              PIC X(003).
            02  SIT4O               PIC X(001).
+           02  FILLER              PIC X(003).
+           02  SIS4O               PIC X(003).
            02  FILLER              PIC X(003).
            02  ACAO5O              PIC X(001).
            02  FILLER              PIC X(003).
@@ -522,6 +590,8 @@
            02  FILLER              PIC X(003).
            02  SIT5O               PIC X(001).
            02  FILLER              PIC X(003).
+           02  SIS5O               PIC X(003).
+           02  FILLER              PIC X(003).
            02  ACAO6O              PIC X(001).
            02  FILLER              PIC X(003).
            02  COD6O               PIC X(006).
@@ -535,6 +605,8 @@
            02  AUX6O               PIC X(010).
            02  FILLER              PIC X(003).
            02  SIT6O               PIC X(001).
+           02  FILLER              PIC X(003).
+           02  SIS6O               PIC X(003).
            02  FILLER              PIC X(003).
            02  ACAO7O              PIC X(001).
            02  FILLER              PIC X(003).
@@ -550,6 +622,8 @@
            02  FILLER              PIC X(003).
            02  SIT7O               PIC X(001).
            02  FILLER              PIC X(003).
+           02  SIS7O               PIC X(003).
+           02  FILLER              PIC X(003).
            02  ACAO8O              PIC X(001).
            02  FILLER              PIC X(003).
            02  COD8O               PIC X(006).
@@ -563,6 +637,8 @@
            02  AUX8O               PIC X(010).
            02  FILLER              PIC X(003).
            02  SIT8O               PIC X(001).
+           02  FILLER              PIC X(003).
+           02  SIS8O               PIC X(003).
            02  FILLER              PIC X(003).
            02  ACAO9O              PIC X(001).
            02  FILLER              PIC X(003).
@@ -578,6 +654,8 @@
            02  FILLER              PIC X(003).
            02  SIT9O               PIC X(001).
            02  FILLER              PIC X(003).
+           02  SIS9O               PIC X(003).
+           02  FILLER              PIC X(003).
            02  ACAOAO              PIC X(001).
            02  FILLER              PIC X(003).
            02  CODAO               PIC X(006).
@@ -591,6 +669,8 @@
            02  AUXAO               PIC X(010).
            02  FILLER              PIC X(003).
            02  SITAO               PIC X(001).
+           02  FILLER              PIC X(003).
+           02  SISAO               PIC X(003).
            02  FILLER              PIC X(003).
            02  ACAOBO              PIC X(001).
            02  FILLER              PIC X(003).
@@ -606,6 +686,8 @@
            02  FILLER              PIC X(003).
            02  SITBO               PIC X(001).
            02  FILLER              PIC X(003).
+           02  SISBO               PIC X(003).
+           02  FILLER              PIC X(003).
            02  ACAOCO              PIC X(001).
            02  FILLER              PIC X(003).
            02  CODCO               PIC X(006).
@@ -619,6 +701,8 @@
            02  AUXCO               PIC X(010).
            02  FILLER              PIC X(003).
            02  SITCO               PIC X(001).
+           02  FILLER              PIC X(003).
+           02  SISCO               PIC X(003).
            02  FILLER              PIC X(003).
            02  MPAGO               PIC X(003).
            02  FILLER              PIC X(003).
