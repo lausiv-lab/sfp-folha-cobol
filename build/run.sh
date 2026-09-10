@@ -29,6 +29,12 @@ banner () {
     echo "================================================="
 }
 
+# stat -c e GNU (Linux); o BSD do macOS usa stat -f. Tenta o
+# primeiro e cai no segundo.
+tamanho () {
+    stat -c%s "$1" 2>/dev/null || stat -f%z "$1"
+}
+
 avalia () {
     local rc=$1 nome=$2
     if   [ "$rc" -eq 0 ]; then echo ">> $nome terminou com RC=00 (OK)"
@@ -92,7 +98,7 @@ avalia $? SFP0600
 banner "RESUMO DAS SAIDAS GERADAS EM ./saidas"
 ls -1 saidas | while read a; do
     printf "  %-16s %8s bytes  %6s registros\n" \
-           "$a" "$(stat -c%s saidas/$a)" "$(wc -l < saidas/$a)"
+           "$a" "$(tamanho saidas/$a)" "$(wc -l < saidas/$a)"
 done
 
 echo ""
