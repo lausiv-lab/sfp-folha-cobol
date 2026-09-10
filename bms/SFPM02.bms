@@ -63,13 +63,13 @@ DESC1    DFHMDF POS=(09,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE1    DFHMDF POS=(09,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO1    DFHMDF POS=(09,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO1    DFHMDF POS=(09,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO1    DFHMDF POS=(09,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO1    DFHMDF POS=(09,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG1    DFHMDF POS=(09,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(09,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG1    DFHMDF POS=(09,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(09,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 02                                                            *
 ***********************************************************************
@@ -81,13 +81,13 @@ DESC2    DFHMDF POS=(10,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE2    DFHMDF POS=(10,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO2    DFHMDF POS=(10,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO2    DFHMDF POS=(10,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO2    DFHMDF POS=(10,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO2    DFHMDF POS=(10,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG2    DFHMDF POS=(10,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(10,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG2    DFHMDF POS=(10,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(10,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 03                                                            *
 ***********************************************************************
@@ -99,13 +99,13 @@ DESC3    DFHMDF POS=(11,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE3    DFHMDF POS=(11,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO3    DFHMDF POS=(11,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO3    DFHMDF POS=(11,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO3    DFHMDF POS=(11,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO3    DFHMDF POS=(11,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG3    DFHMDF POS=(11,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(11,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG3    DFHMDF POS=(11,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(11,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 04                                                            *
 ***********************************************************************
@@ -117,13 +117,13 @@ DESC4    DFHMDF POS=(12,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE4    DFHMDF POS=(12,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO4    DFHMDF POS=(12,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO4    DFHMDF POS=(12,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO4    DFHMDF POS=(12,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO4    DFHMDF POS=(12,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG4    DFHMDF POS=(12,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(12,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG4    DFHMDF POS=(12,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(12,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 05                                                            *
 ***********************************************************************
@@ -135,13 +135,13 @@ DESC5    DFHMDF POS=(13,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE5    DFHMDF POS=(13,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO5    DFHMDF POS=(13,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO5    DFHMDF POS=(13,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO5    DFHMDF POS=(13,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO5    DFHMDF POS=(13,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG5    DFHMDF POS=(13,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(13,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG5    DFHMDF POS=(13,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(13,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 06                                                            *
 ***********************************************************************
@@ -153,13 +153,13 @@ DESC6    DFHMDF POS=(14,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE6    DFHMDF POS=(14,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO6    DFHMDF POS=(14,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO6    DFHMDF POS=(14,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO6    DFHMDF POS=(14,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO6    DFHMDF POS=(14,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG6    DFHMDF POS=(14,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(14,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG6    DFHMDF POS=(14,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(14,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 07                                                            *
 ***********************************************************************
@@ -171,13 +171,13 @@ DESC7    DFHMDF POS=(15,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE7    DFHMDF POS=(15,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO7    DFHMDF POS=(15,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO7    DFHMDF POS=(15,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO7    DFHMDF POS=(15,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO7    DFHMDF POS=(15,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG7    DFHMDF POS=(15,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(15,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG7    DFHMDF POS=(15,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(15,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 08                                                            *
 ***********************************************************************
@@ -189,13 +189,13 @@ DESC8    DFHMDF POS=(16,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE8    DFHMDF POS=(16,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO8    DFHMDF POS=(16,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO8    DFHMDF POS=(16,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO8    DFHMDF POS=(16,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO8    DFHMDF POS=(16,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG8    DFHMDF POS=(16,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(16,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG8    DFHMDF POS=(16,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(16,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 09                                                            *
 ***********************************************************************
@@ -207,13 +207,13 @@ DESC9    DFHMDF POS=(17,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFE9    DFHMDF POS=(17,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALO9    DFHMDF POS=(17,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALO9    DFHMDF POS=(17,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPO9    DFHMDF POS=(17,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPO9    DFHMDF POS=(17,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIG9    DFHMDF POS=(17,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(17,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIG9    DFHMDF POS=(17,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(17,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * LINHA 10                                                            *
 ***********************************************************************
@@ -225,13 +225,13 @@ DESCA    DFHMDF POS=(18,08),LENGTH=26,ATTRB=(PROT,NORM),COLOR=NEUTRAL
 REFEA    DFHMDF POS=(18,35),LENGTH=09,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(5)V99',PICOUT='ZZ.ZZ9,99'
-VALOA    DFHMDF POS=(18,45),LENGTH=13,ATTRB=(UNPROT,NUM),              X
+VALOA    DFHMDF POS=(18,45),LENGTH=14,ATTRB=(UNPROT,NUM),              X
                COLOR=TURQUOISE,HILIGHT=UNDERLINE,                      X
                PICIN='9(9)V99',PICOUT='ZZZ.ZZZ.ZZ9,99'
-TIPOA    DFHMDF POS=(18,59),LENGTH=01,ATTRB=(UNPROT,NORM),             X
+TIPOA    DFHMDF POS=(18,60),LENGTH=01,ATTRB=(UNPROT,NORM),             X
                COLOR=TURQUOISE
-ORIGA    DFHMDF POS=(18,61),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
-         DFHMDF POS=(18,65),LENGTH=01,ATTRB=(ASKIP,NORM)
+ORIGA    DFHMDF POS=(18,62),LENGTH=03,ATTRB=(PROT,NORM),COLOR=NEUTRAL
+         DFHMDF POS=(18,66),LENGTH=01,ATTRB=(ASKIP,NORM)
 ***********************************************************************
 * TOTALIZADORES E MENSAGENS                                           *
 ***********************************************************************

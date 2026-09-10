@@ -383,7 +383,7 @@
            02  MTOTALF             PIC X.
            02  FILLER REDEFINES MTOTALF.
                03 MTOTALA          PIC X.
-           02  MTOTALI             PIC 9(009)V99.
+           02  MTOTALI             PIC X(014).
            02  MQTDL               PIC S9(004) COMP.
            02  MQTDF               PIC X.
            02  FILLER REDEFINES MQTDF.
