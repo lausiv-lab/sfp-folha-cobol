@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(python3 tools/gerar_massa.py)",
+      "Bash(python3 tools/gerar_dominios.py)",
+      "Bash(python3 tools/gerar_dicionario.py)",
+      "Bash(python3 tools/gerar_bms.py)",
+      "Bash(python3 tools/auditar.py)",
+      "Bash(./build/build.sh)",
+      "Bash(./build/run.sh)",
+      "Bash(bash -n:*)",
+      "Bash(awk:*)",
+      "Bash(grep:*)",
+      "Bash(sed:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(cmp:*)",
+      "Bash(diff:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)"
+    ]
+  }
+}
