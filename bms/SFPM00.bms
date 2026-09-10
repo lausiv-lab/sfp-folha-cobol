@@ -50,16 +50,16 @@ MUSER    DFHMDF POS=(2,59),LENGTH=8,ATTRB=(PROT,NORM),                 X
 ***********************************************************************
          DFHMDF POS=(4,3),LENGTH=28,ATTRB=(PROT,BRT),                  X
                COLOR=YELLOW,INITIAL='1. CADASTROS BASICOS'
-         DFHMDF POS=(5,5),LENGTH=45,ATTRB=(PROT,NORM),                 X
+         DFHMDF POS=(5,3),LENGTH=43,ATTRB=(PROT,NORM),                 X
                COLOR=GREEN,                                            X
                INITIAL='11 - EMPRESA E ESTABELECIMENTOS ...... SF05'
-         DFHMDF POS=(6,5),LENGTH=45,ATTRB=(PROT,NORM),                 X
+         DFHMDF POS=(6,3),LENGTH=43,ATTRB=(PROT,NORM),                 X
                COLOR=GREEN,                                            X
                INITIAL='12 - CARGOS E PISOS SALARIAIS ........ SF06'
-         DFHMDF POS=(7,5),LENGTH=45,ATTRB=(PROT,NORM),                 X
+         DFHMDF POS=(7,3),LENGTH=43,ATTRB=(PROT,NORM),                 X
                COLOR=GREEN,                                            X
                INITIAL='13 - DEPARTAMENTOS E CENTROS DE CUSTO  SF07'
-         DFHMDF POS=(8,5),LENGTH=45,ATTRB=(PROT,NORM),                 X
+         DFHMDF POS=(8,3),LENGTH=43,ATTRB=(PROT,NORM),                 X
                COLOR=GREEN,                                            X
                INITIAL='14 - TABELAS DE DOMINIO .............. SF08'
 ***********************************************************************
@@ -67,16 +67,16 @@ MUSER    DFHMDF POS=(2,59),LENGTH=8,ATTRB=(PROT,NORM),                 X
 ***********************************************************************
          DFHMDF POS=(4,44),LENGTH=28,ATTRB=(PROT,BRT),                 X
                COLOR=YELLOW,INITIAL='2. PESSOAL'
-         DFHMDF POS=(5,46),LENGTH=33,ATTRB=(PROT,NORM),                X
+         DFHMDF POS=(5,47),LENGTH=32,ATTRB=(PROT,NORM),                X
                COLOR=GREEN,                                            X
                INITIAL='21 - ADMISSAO / CADASTRO .. SF01'
-         DFHMDF POS=(6,46),LENGTH=33,ATTRB=(PROT,NORM),                X
+         DFHMDF POS=(6,47),LENGTH=32,ATTRB=(PROT,NORM),                X
                COLOR=GREEN,                                            X
                INITIAL='22 - DEPENDENTES .......... SF02'
-         DFHMDF POS=(7,46),LENGTH=33,ATTRB=(PROT,NORM),                X
+         DFHMDF POS=(7,47),LENGTH=32,ATTRB=(PROT,NORM),                X
                COLOR=GREEN,                                            X
                INITIAL='23 - ALTERACAO DE CARGO ... SF09'
-         DFHMDF POS=(8,46),LENGTH=33,ATTRB=(PROT,NORM),                X
+         DFHMDF POS=(8,47),LENGTH=32,ATTRB=(PROT,NORM),                X
                COLOR=GREEN,                                            X
                INITIAL='24 - DESLIGAMENTO ......... SF10'
 ***********************************************************************
@@ -84,16 +84,16 @@ MUSER    DFHMDF POS=(2,59),LENGTH=8,ATTRB=(PROT,NORM),                 X
 ***********************************************************************
          DFHMDF POS=(10,3),LENGTH=28,ATTRB=(PROT,BRT),                 X
                COLOR=YELLOW,INITIAL='3. FOLHA DE PAGAMENTO'
-         DFHMDF POS=(11,5),LENGTH=45,ATTRB=(PROT,NORM),                X
+         DFHMDF POS=(11,3),LENGTH=43,ATTRB=(PROT,NORM),                X
                COLOR=GREEN,                                            X
                INITIAL='31 - RUBRICAS E EVENTOS .............. SF04'
-         DFHMDF POS=(12,5),LENGTH=45,ATTRB=(PROT,NORM),                X
+         DFHMDF POS=(12,3),LENGTH=43,ATTRB=(PROT,NORM),                X
                COLOR=GREEN,                                            X
                INITIAL='32 - LANCAMENTO DE MOVIMENTO ......... SF03'
-         DFHMDF POS=(13,5),LENGTH=45,ATTRB=(PROT,NORM),                X
+         DFHMDF POS=(13,3),LENGTH=43,ATTRB=(PROT,NORM),                X
                COLOR=GREEN,                                            X
                INITIAL='33 - TABELAS LEGAIS (INSS/IRRF/SF) ... SF11'
-         DFHMDF POS=(14,5),LENGTH=45,ATTRB=(PROT,NORM),                X
+         DFHMDF POS=(14,3),LENGTH=43,ATTRB=(PROT,NORM),                X
                COLOR=GREEN,                                            X
                INITIAL='34 - ABERTURA E FECHAMENTO DE COMPET.  SF12'
 ***********************************************************************
@@ -101,13 +101,13 @@ MUSER    DFHMDF POS=(2,59),LENGTH=8,ATTRB=(PROT,NORM),                 X
 ***********************************************************************
          DFHMDF POS=(10,44),LENGTH=28,ATTRB=(PROT,BRT),                X
                COLOR=YELLOW,INITIAL='4. CONSULTAS'
-         DFHMDF POS=(11,46),LENGTH=33,ATTRB=(PROT,NORM),               X
+         DFHMDF POS=(11,47),LENGTH=32,ATTRB=(PROT,NORM),               X
                COLOR=GREEN,                                            X
                INITIAL='41 - FICHA FINANCEIRA ..... SF13'
-         DFHMDF POS=(12,46),LENGTH=33,ATTRB=(PROT,NORM),               X
+         DFHMDF POS=(12,47),LENGTH=32,ATTRB=(PROT,NORM),               X
                COLOR=GREEN,                                            X
                INITIAL='42 - ESPELHO DE PAGAMENTO . SF14'
-         DFHMDF POS=(13,46),LENGTH=33,ATTRB=(PROT,NORM),               X
+         DFHMDF POS=(13,47),LENGTH=32,ATTRB=(PROT,NORM),               X
                COLOR=GREEN,                                            X
                INITIAL='43 - CRITICAS DA FOLHA .... SF15'
 ***********************************************************************
