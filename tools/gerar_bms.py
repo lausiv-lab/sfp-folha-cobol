@@ -64,7 +64,13 @@ def rotulo(lin, col, texto, cor='BLUE', attr='(PROT,NORM)'):
 
 
 def campo(nome, lin, col, tam, prot=False, cor='GREEN',
-          brt=False, ic=False):
+          brt=False, ic=False, stop=True):
+    """Emite o DFHMDF de um campo.
+
+    Campo desprotegido ganha um DFHMDF de comprimento zero logo
+    depois, para o atributo fechar a area digitavel. Quando o
+    campo seguinte ja encosta, esse stopper cairia na mesma POS
+    dele: passe stop=False."""
     if prot:
         attr = '(PROT,BRT)' if brt else '(PROT,NORM)'
         extra = ''
@@ -74,7 +80,7 @@ def campo(nome, lin, col, tam, prot=False, cor='GREEN',
     out = [f"{nome:<8} DFHMDF POS=({lin},{col}),LENGTH={tam},"
            f"ATTRB={attr},".ljust(71) + "X",
            f"               COLOR={cor}{extra}"]
-    if not prot:
+    if not prot and stop:
         out.append(f"         DFHMDF POS=({lin},{col + tam + 1}),"
                    f"LENGTH=0,ATTRB=(ASKIP,NORM)")
     return out
@@ -323,9 +329,10 @@ L += rotulo(6, 2, 'N.FANTASIA .:')
 L += campo('MFANTAS', 6, 16, 40)
 L += rotulo(7, 1, '-- ENDERECO ' + '-' * 67)
 L += rotulo(8, 2, 'LOGRADOURO .:')
-L += campo('MTIPLOG', 8, 16, 3)
-L += campo('MLOGRAD', 8, 20, 40)
-L += rotulo(8, 62, 'NUMERO:')
+L += campo('MTIPLOG', 8, 16, 3, stop=False)
+L += rotulo(8, 20, 'F4')
+L += campo('MLOGRAD', 8, 23, 40)
+L += rotulo(8, 65, 'NUM:')
 L += campo('MNUMERO', 8, 70, 8)
 L += rotulo(9, 2, 'COMPLEMENTO :')
 L += campo('MCOMPL', 9, 16, 15)
@@ -364,13 +371,14 @@ L += campo('MSINDIC', 17, 16, 40)
 L += rotulo(17, 58, 'DATA BASE:')
 L += campo('MDTBASE', 17, 69, 2)
 L += rotulo(18, 2, 'BANCO PAGADOR:')
-L += campo('MBANCO', 18, 17, 3)
-L += rotulo(18, 22, 'AGENCIA:')
-L += campo('MAGENCI', 18, 31, 5)
-L += rotulo(18, 38, 'CONTA:')
-L += campo('MCONTA', 18, 45, 12)
-L += rotulo(18, 59, 'DIA PAGTO:')
-L += campo('MDIAPAG', 18, 70, 2)
+L += campo('MBANCO', 18, 17, 3, stop=False)
+L += rotulo(18, 21, 'F4=LISTA')
+L += rotulo(18, 30, 'AGENCIA:')
+L += campo('MAGENCI', 18, 39, 5, stop=False)
+L += rotulo(18, 45, 'CONTA:')
+L += campo('MCONTA', 18, 52, 12, stop=False)
+L += rotulo(18, 65, 'DIA PAGTO:')
+L += campo('MDIAPAG', 18, 76, 2, stop=False)
 L += rotulo(19, 2, 'CONVENIO ...:')
 L += campo('MCONVEN', 19, 16, 20)
 L += rotulo(19, 40, 'SITUACAO:')
