@@ -222,21 +222,21 @@
            02  FILLER              PIC X(003).
            02  INDVTO              PIC X(001).
            02  FILLER              PIC X(003).
-           02  VLRVTO              PIC ZZZ.ZZ9,99.
+           02  VLRVTO              PIC Z.ZZZ.ZZ9,99.
            02  FILLER              PIC X(003).
            02  INDVRO              PIC X(001).
            02  FILLER              PIC X(003).
-           02  VLRVRO              PIC ZZZ.ZZ9,99.
+           02  VLRVRO              PIC Z.ZZZ.ZZ9,99.
            02  FILLER              PIC X(003).
            02  INDPSO              PIC X(001).
            02  FILLER              PIC X(003).
-           02  VLRPSO              PIC ZZZ.ZZ9,99.
+           02  VLRPSO              PIC Z.ZZZ.ZZ9,99.
            02  FILLER              PIC X(003).
            02  PERPENO             PIC ZZ9,99.
            02  FILLER              PIC X(003).
-           02  VLRPENO             PIC ZZZ.ZZ9,99.
+           02  VLRPENO             PIC Z.ZZZ.ZZ9,99.
            02  FILLER              PIC X(003).
-           02  VLRCONO             PIC ZZZ.ZZ9,99.
+           02  VLRCONO             PIC Z.ZZZ.ZZ9,99.
            02  FILLER              PIC X(003).
            02  BANCOO              PIC X(003).
            02  FILLER              PIC X(003).
