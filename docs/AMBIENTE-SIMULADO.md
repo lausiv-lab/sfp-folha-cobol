@@ -469,7 +469,10 @@ quando ha erro, o que serve de porta antes de commit.
 Rodada de estreia: 438 erros. A marca de continuacao saia na
 coluna 71 nos quatro mapsets gerados (322 linhas), a grade do
 `SFPM05` passava da coluna 80, e sobraram 26 achados nos tres
-mapas escritos a mao -- ver `docs/PENDENCIAS.md`.
+mapas escritos a mao. Esses 26 foram corrigidos depois, um mapa
+por commit, e a varredura passou a fechar em oito mapsets sem
+erro nem aviso -- `python3 tools/validar_bms.py --resumo`. O que
+ainda falta em mapa esta em `docs/PENDENCIAS.md`.
 
 **Fase 2 -- shim minimo e `SFP0000`.** Pre-processador,
 `SFPCICS` com `SEND MAP`, `RECEIVE MAP`, `RETURN TRANSID`, `XCTL`
