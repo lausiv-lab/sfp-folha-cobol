@@ -156,25 +156,37 @@ L += rotulo(1, 68, 'SF06')
 L += rotulo(2, 1, 'DATA:')
 L += campo('MDATA', 2, 7, 10, prot=True, cor='TURQUOISE')
 L += rotulo(2, 55, 'POSICIONAR NO CARGO:')
-L += campo('MCARGO', 2, 76, 4, ic=True)
+# o campo termina na coluna 80: o stopper cairia fora da tela
+L += campo('MCARGO', 2, 76, 4, ic=True, stop=False)
 L += rotulo(3, 1, '-' * 79)
-L += rotulo(4, 1, 'A COD DESCRICAO                       '
-                  'CBO    NV  PISO SALARIAL  TETO SALARIAL  CH')
-L += rotulo(5, 1, '- ---- --------------------------------- '
-                  '------ --  -------------  -------------  ---')
+# a grade nao cabia em 80 colunas com piso e teto de treze
+# posicoes; dez ja comportam 9.999.999,99, e o que sobra abre
+# espaco para a carga horaria e para a situacao, que o SFP0140
+# antes so conseguia manter por fora da tela
+COLUNAS_CARGO = [
+    ('ACAO', 2, 1, 'A'),
+    ('COD', 4, 4, 'COD'),
+    ('DES', 9, 35, 'DESCRICAO'),
+    ('CBO', 45, 6, 'CBO'),
+    ('NIV', 52, 1, 'N'),
+    ('PIS', 54, 10, 'PISO SAL.'),
+    ('TET', 65, 10, 'TETO SAL.'),
+    ('CHR', 76, 3, 'CH'),
+    ('SIT', 80, 1, 'S'),
+]
+L += rotulo(4, 1, faixa_grade([c[1:] for c in COLUNAS_CARGO]))
+L += rotulo(5, 1, faixa_grade([c[1:] for c in COLUNAS_CARGO], True))
 lin = 6
+# as colunas encostam umas nas outras: o atributo do campo
+# seguinte ja fecha a area digitavel, e a ultima termina na
+# coluna 80
 for s in SUF:
-    L += campo(f'ACAO{s}', lin, 1, 1)
-    L += campo(f'COD{s}', lin, 3, 4)
-    L += campo(f'DES{s}', lin, 8, 35)
-    L += campo(f'CBO{s}', lin, 44, 6)
-    L += campo(f'NIV{s}', lin, 51, 1)
-    L += campo(f'PIS{s}', lin, 54, 13)
-    L += campo(f'TET{s}', lin, 69, 13)
+    for pref, dado, larg, _ in COLUNAS_CARGO:
+        L += campo(f'{pref}{s}', lin, dado - 1, larg, stop=False)
     lin += 1
 L += rotulo(19, 1, '-' * 79)
-L += rotulo(20, 3, 'ACAO: I=INCLUIR  A=ALTERAR  E=EXCLUIR  '
-                   'BRANCO=SEM ALTERACAO')
+L += rotulo(20, 3, 'ACAO: I=INCLUIR A=ALTERAR E=EXCLUIR'
+                   '   S: A=ATIVO E=EXTINTO')
 L += rotulo(21, 3, 'NIVEL: O=OPERACIONAL T=TECNICO E=ESPECIALISTA '
                    'G=GERENCIAL D=DIRETIVO')
 L += rotulo(22, 3, 'PAGINA:')
@@ -185,10 +197,10 @@ grava('SFPM05.bms', L)
 
 campos = [('MDATA', 'X(010)'), ('MCARGO', 'X(004)')]
 for s in SUF:
-    campos += [(f'ACAO{s}', 'X(001)'), (f'COD{s}', 'X(004)'),
-               (f'DES{s}', 'X(035)'), (f'CBO{s}', 'X(006)'),
-               (f'NIV{s}', 'X(001)'), (f'PIS{s}', 'Z(009)9,99'),
-               (f'TET{s}', 'Z(009)9,99')]
+    for pref, _, larg, _ in COLUNAS_CARGO:
+        pic = 'Z(006)9,99' if pref in ('PIS', 'TET') \
+              else f'X({larg:03d})'
+        campos.append((f'{pref}{s}', pic))
 campos += [('MPAG', 'X(003)'), ('MMENSAG', 'X(079)')]
 n = simbolico('SFPM05', 'MAPCARG', campos,
               os.path.join(RAIZ, 'copy', 'SFPM05.cpy'))

@@ -41,11 +41,16 @@
       *  RN07 - INCLUSAO NAO PODE DUPLICAR CODIGO EXISTENTE            *
       *  RN08 - ALTERACAO E EXCLUSAO EXIGEM CARGO JA CADASTRADO        *
       *  RN09 - NAO SE EXCLUI CARGO COM EMPREGADO NAO DEMITIDO         *
+      *  RN10 - CARGA HORARIA MENSAL MAIOR QUE ZERO                    *
+      *  RN11 - SITUACAO EM A OU E                                     *
       *----------------------------------------------------------------*
-      * CARGA HORARIA MENSAL E OS INDICADORES DE INSALUBRIDADE,        *
-      * PERICULOSIDADE E CONFIANCA NAO TEM CAMPO NO MAPA SFPM05. NA    *
-      * INCLUSAO RECEBEM O PADRAO (220 HORAS E N) E NA ALTERACAO SAO   *
-      * PRESERVADOS COMO ESTAVAM NO REGISTRO.                          *
+      * A GRADE DO SFPM05 TEM COLUNA PARA CARGA HORARIA (CH) E PARA    *
+      * SITUACAO (S). A EXCLUSAO PELA ACAO E E LOGICA: MARCA           *
+      * CAR-SITUACAO COM E, E O CARGO CONTINUA NA GRADE PARA PODER     *
+      * VOLTAR A A. NA INCLUSAO A CARGA OMITIDA SAI COMO 220 E A       *
+      * SITUACAO COMO A. OS INDICADORES DE INSALUBRIDADE,              *
+      * PERICULOSIDADE E CONFIANCA CONTINUAM SEM CAMPO NO MAPA: NA     *
+      * INCLUSAO RECEBEM N E NA ALTERACAO SAO PRESERVADOS.             *
       *================================================================*
        IDENTIFICATION DIVISION.
        PROGRAM-ID. SFP0140.
@@ -88,11 +93,15 @@
                10  WS-LN-NIVEL     PIC X(001).
                10  WS-LN-PISO      PIC 9(009)V99.
                10  WS-LN-TETO      PIC 9(009)V99.
+               10  WS-LN-CARGA     PIC 9(003).
+               10  WS-LN-SITUAC    PIC X(001).
                10  WS-LN-DES-INF   PIC X(001).
                10  WS-LN-CBO-INF   PIC X(001).
                10  WS-LN-NIV-INF   PIC X(001).
                10  WS-LN-PIS-INF   PIC X(001).
                10  WS-LN-TET-INF   PIC X(001).
+               10  WS-LN-CAR-INF   PIC X(001).
+               10  WS-LN-SIT-INF   PIC X(001).
                10  WS-LN-MAL-FORM  PIC X(001).
       *
       *--- PAGINA LIDA DE TRAS PARA FRENTE (F7) ------------------------
@@ -106,8 +115,10 @@
            05  WS-CP-DESCR         PIC X(035) VALUE SPACES.
            05  WS-CP-CBO           PIC X(006) VALUE SPACES.
            05  WS-CP-NIVEL         PIC X(001) VALUE SPACES.
-           05  WS-CP-PISO          PIC X(013) VALUE SPACES.
-           05  WS-CP-TETO          PIC X(013) VALUE SPACES.
+           05  WS-CP-PISO          PIC X(010) VALUE SPACES.
+           05  WS-CP-TETO          PIC X(010) VALUE SPACES.
+           05  WS-CP-CARGA         PIC X(003) VALUE SPACES.
+           05  WS-CP-SITUAC        PIC X(001) VALUE SPACES.
       *
       *--- ESTADO DA PAGINA - VIVE NA COMMAREA A PARTIR DO BYTE 121 ----
        01  WS-ESTADO.
@@ -162,7 +173,7 @@
            05  WS-MSG-ALT          PIC ZZ9.
            05  FILLER              PIC X(012) VALUE ' ALTERADOS, '.
            05  WS-MSG-EXC          PIC ZZ9.
-           05  FILLER              PIC X(010) VALUE ' EXCLUIDOS'.
+           05  FILLER              PIC X(010) VALUE ' EXTINTOS '.
       *
       *--- DES-EDICAO DE PISO E TETO (VER 7400) ------------------------
        01  WS-EDIT.
@@ -363,6 +374,8 @@
            MOVE NIV1I                  TO WS-CP-NIVEL
            MOVE PIS1I                  TO WS-CP-PISO
            MOVE TET1I                  TO WS-CP-TETO
+           MOVE CHR1I                  TO WS-CP-CARGA
+           MOVE SIT1I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3110-FIM.
            EXIT.
@@ -377,6 +390,8 @@
            MOVE NIV2I                  TO WS-CP-NIVEL
            MOVE PIS2I                  TO WS-CP-PISO
            MOVE TET2I                  TO WS-CP-TETO
+           MOVE CHR2I                  TO WS-CP-CARGA
+           MOVE SIT2I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3111-FIM.
            EXIT.
@@ -391,6 +406,8 @@
            MOVE NIV3I                  TO WS-CP-NIVEL
            MOVE PIS3I                  TO WS-CP-PISO
            MOVE TET3I                  TO WS-CP-TETO
+           MOVE CHR3I                  TO WS-CP-CARGA
+           MOVE SIT3I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3112-FIM.
            EXIT.
@@ -405,6 +422,8 @@
            MOVE NIV4I                  TO WS-CP-NIVEL
            MOVE PIS4I                  TO WS-CP-PISO
            MOVE TET4I                  TO WS-CP-TETO
+           MOVE CHR4I                  TO WS-CP-CARGA
+           MOVE SIT4I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3113-FIM.
            EXIT.
@@ -419,6 +438,8 @@
            MOVE NIV5I                  TO WS-CP-NIVEL
            MOVE PIS5I                  TO WS-CP-PISO
            MOVE TET5I                  TO WS-CP-TETO
+           MOVE CHR5I                  TO WS-CP-CARGA
+           MOVE SIT5I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3114-FIM.
            EXIT.
@@ -433,6 +454,8 @@
            MOVE NIV6I                  TO WS-CP-NIVEL
            MOVE PIS6I                  TO WS-CP-PISO
            MOVE TET6I                  TO WS-CP-TETO
+           MOVE CHR6I                  TO WS-CP-CARGA
+           MOVE SIT6I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3115-FIM.
            EXIT.
@@ -447,6 +470,8 @@
            MOVE NIV7I                  TO WS-CP-NIVEL
            MOVE PIS7I                  TO WS-CP-PISO
            MOVE TET7I                  TO WS-CP-TETO
+           MOVE CHR7I                  TO WS-CP-CARGA
+           MOVE SIT7I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3116-FIM.
            EXIT.
@@ -461,6 +486,8 @@
            MOVE NIV8I                  TO WS-CP-NIVEL
            MOVE PIS8I                  TO WS-CP-PISO
            MOVE TET8I                  TO WS-CP-TETO
+           MOVE CHR8I                  TO WS-CP-CARGA
+           MOVE SIT8I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3117-FIM.
            EXIT.
@@ -475,6 +502,8 @@
            MOVE NIV9I                  TO WS-CP-NIVEL
            MOVE PIS9I                  TO WS-CP-PISO
            MOVE TET9I                  TO WS-CP-TETO
+           MOVE CHR9I                  TO WS-CP-CARGA
+           MOVE SIT9I                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3118-FIM.
            EXIT.
@@ -489,6 +518,8 @@
            MOVE NIVAI                  TO WS-CP-NIVEL
            MOVE PISAI                  TO WS-CP-PISO
            MOVE TETAI                  TO WS-CP-TETO
+           MOVE CHRAI                  TO WS-CP-CARGA
+           MOVE SITAI                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3119-FIM.
            EXIT.
@@ -503,6 +534,8 @@
            MOVE NIVBI                  TO WS-CP-NIVEL
            MOVE PISBI                  TO WS-CP-PISO
            MOVE TETBI                  TO WS-CP-TETO
+           MOVE CHRBI                  TO WS-CP-CARGA
+           MOVE SITBI                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3120-FIM.
            EXIT.
@@ -517,6 +550,8 @@
            MOVE NIVCI                  TO WS-CP-NIVEL
            MOVE PISCI                  TO WS-CP-PISO
            MOVE TETCI                  TO WS-CP-TETO
+           MOVE CHRCI                  TO WS-CP-CARGA
+           MOVE SITCI                  TO WS-CP-SITUAC
            PERFORM 3150-GUARDAR-LINHA.
        3121-FIM.
            EXIT.
@@ -532,15 +567,19 @@
            MOVE SPACES                 TO WS-LN-ACAO(WS-IX)
                                           WS-LN-DESCR(WS-IX)
                                           WS-LN-NIVEL(WS-IX)
+                                          WS-LN-SITUAC(WS-IX)
            MOVE 'N'                    TO WS-LN-DES-INF(WS-IX)
                                           WS-LN-CBO-INF(WS-IX)
                                           WS-LN-NIV-INF(WS-IX)
                                           WS-LN-PIS-INF(WS-IX)
                                           WS-LN-TET-INF(WS-IX)
+                                          WS-LN-CAR-INF(WS-IX)
+                                          WS-LN-SIT-INF(WS-IX)
                                           WS-LN-MAL-FORM(WS-IX)
            MOVE ZEROS                  TO WS-LN-CBO(WS-IX)
                                           WS-LN-PISO(WS-IX)
                                           WS-LN-TETO(WS-IX)
+                                          WS-LN-CARGA(WS-IX)
       *
            IF WS-CP-ACAO NOT = LOW-VALUES
                MOVE FUNCTION UPPER-CASE(WS-CP-ACAO)
@@ -610,6 +649,26 @@
                ELSE
                    MOVE 'S'            TO WS-LN-MAL-FORM(WS-IX)
                END-IF
+           END-IF
+      *
+           IF WS-CP-CARGA NOT = LOW-VALUES
+              AND WS-CP-CARGA NOT = SPACES
+               MOVE 'S'                TO WS-LN-CAR-INF(WS-IX)
+               MOVE WS-CP-CARGA        TO WS-ED-CAMPO
+               PERFORM 7400-DE-EDITAR
+               IF WS-ED-OK = 'S' AND WS-ED-TAM-DEC = ZEROS
+                  AND WS-ED-TAM-INT <= 3
+                   MOVE WS-ED-INT      TO WS-LN-CARGA(WS-IX)
+               ELSE
+                   MOVE 'S'            TO WS-LN-MAL-FORM(WS-IX)
+               END-IF
+           END-IF
+      *
+           IF WS-CP-SITUAC NOT = LOW-VALUES
+              AND WS-CP-SITUAC NOT = SPACES
+               MOVE FUNCTION UPPER-CASE(WS-CP-SITUAC)
+                                       TO WS-LN-SITUAC(WS-IX)
+               MOVE 'S'                TO WS-LN-SIT-INF(WS-IX)
            END-IF.
        3150-FIM.
            EXIT.
@@ -747,11 +806,15 @@
            MOVE CAR-NIVEL              TO WS-LN-NIVEL(WS-IY)
            MOVE CAR-PISO-SALARIAL      TO WS-LN-PISO(WS-IY)
            MOVE CAR-TETO-SALARIAL      TO WS-LN-TETO(WS-IY)
+           MOVE CAR-CARGA-HOR-MES      TO WS-LN-CARGA(WS-IY)
+           MOVE CAR-SITUACAO           TO WS-LN-SITUAC(WS-IY)
            MOVE 'N'                    TO WS-LN-DES-INF(WS-IY)
                                           WS-LN-CBO-INF(WS-IY)
                                           WS-LN-NIV-INF(WS-IY)
                                           WS-LN-PIS-INF(WS-IY)
                                           WS-LN-TET-INF(WS-IY)
+                                          WS-LN-CAR-INF(WS-IY)
+                                          WS-LN-SIT-INF(WS-IY)
                                           WS-LN-MAL-FORM(WS-IY).
        3850-FIM.
            EXIT.
@@ -1001,6 +1064,12 @@
            IF WS-LN-TET-INF(WS-IX) = 'S'
                MOVE WS-LN-TETO(WS-IX)  TO CAR-TETO-SALARIAL
            END-IF
+           IF WS-LN-CAR-INF(WS-IX) = 'S'
+               MOVE WS-LN-CARGA(WS-IX) TO CAR-CARGA-HOR-MES
+           END-IF
+           IF WS-LN-SIT-INF(WS-IX) = 'S'
+               MOVE WS-LN-SITUAC(WS-IX) TO CAR-SITUACAO
+           END-IF
       *
       *--- A FAMILIA SAO OS QUATRO PRIMEIROS DIGITOS DO CBO ------------
            COMPUTE CAR-COD-CBO-FAMILIA = CAR-CBO / 100.
@@ -1040,6 +1109,20 @@
       *
            IF CAR-TETO-SALARIAL < CAR-PISO-SALARIAL
                MOVE 'RN06 - TETO NAO PODE SER MENOR QUE O PISO'
+                                       TO WS-MENSAGEM
+               PERFORM 4190-MARCAR-ERRO
+               GO TO 4160-FIM
+           END-IF
+      *
+           IF CAR-CARGA-HOR-MES = ZEROS
+               MOVE 'RN10 - CARGA HORARIA MENSAL OBRIGATORIA'
+                                       TO WS-MENSAGEM
+               PERFORM 4190-MARCAR-ERRO
+               GO TO 4160-FIM
+           END-IF
+      *
+           IF CAR-SITUACAO NOT = 'A' AND 'E'
+               MOVE 'RN11 - SITUACAO DEVE SER A OU E'
                                        TO WS-MENSAGEM
                PERFORM 4190-MARCAR-ERRO
            END-IF.
@@ -1153,14 +1236,19 @@
                GO TO 4400-FIM
            END-IF
       *
-           EXEC CICS DELETE
-                FILE(WS-ARQUIVO) RESP(WS-RESP)
+      *--- EXCLUSAO E LOGICA: A COLUNA S DA GRADE MOSTRA O CARGO -------
+      *--- EXTINTO E PERMITE REVERTER PARA A -------------------------
+           SET CAR-EXTINTO             TO TRUE
+      *
+           EXEC CICS REWRITE
+                FILE(WS-ARQUIVO) FROM(REG-CARGO)
+                RESP(WS-RESP)
            END-EXEC
       *
            IF WS-RESP = DFHRESP(NORMAL)
                ADD 1                   TO WS-EXCLUIDOS
            ELSE
-               MOVE 'FALHA AO EXCLUIR O CARGO NO SFPCAR'
+               MOVE 'FALHA AO EXTINGUIR O CARGO NO SFPCAR'
                                        TO WS-MENSAGEM
                PERFORM 4190-MARCAR-ERRO
            END-IF.
@@ -1237,7 +1325,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO1O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV1O
            MOVE WS-LN-PISO(WS-IX)      TO PIS1O
-           MOVE WS-LN-TETO(WS-IX)      TO TET1O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET1O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR1O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT1O.
        6010-FIM.
            EXIT.
       *
@@ -1249,7 +1339,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO2O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV2O
            MOVE WS-LN-PISO(WS-IX)      TO PIS2O
-           MOVE WS-LN-TETO(WS-IX)      TO TET2O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET2O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR2O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT2O.
        6011-FIM.
            EXIT.
       *
@@ -1261,7 +1353,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO3O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV3O
            MOVE WS-LN-PISO(WS-IX)      TO PIS3O
-           MOVE WS-LN-TETO(WS-IX)      TO TET3O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET3O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR3O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT3O.
        6012-FIM.
            EXIT.
       *
@@ -1273,7 +1367,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO4O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV4O
            MOVE WS-LN-PISO(WS-IX)      TO PIS4O
-           MOVE WS-LN-TETO(WS-IX)      TO TET4O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET4O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR4O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT4O.
        6013-FIM.
            EXIT.
       *
@@ -1285,7 +1381,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO5O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV5O
            MOVE WS-LN-PISO(WS-IX)      TO PIS5O
-           MOVE WS-LN-TETO(WS-IX)      TO TET5O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET5O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR5O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT5O.
        6014-FIM.
            EXIT.
       *
@@ -1297,7 +1395,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO6O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV6O
            MOVE WS-LN-PISO(WS-IX)      TO PIS6O
-           MOVE WS-LN-TETO(WS-IX)      TO TET6O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET6O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR6O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT6O.
        6015-FIM.
            EXIT.
       *
@@ -1309,7 +1409,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO7O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV7O
            MOVE WS-LN-PISO(WS-IX)      TO PIS7O
-           MOVE WS-LN-TETO(WS-IX)      TO TET7O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET7O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR7O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT7O.
        6016-FIM.
            EXIT.
       *
@@ -1321,7 +1423,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO8O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV8O
            MOVE WS-LN-PISO(WS-IX)      TO PIS8O
-           MOVE WS-LN-TETO(WS-IX)      TO TET8O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET8O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR8O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT8O.
        6017-FIM.
            EXIT.
       *
@@ -1333,7 +1437,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBO9O
            MOVE WS-LN-NIVEL(WS-IX)     TO NIV9O
            MOVE WS-LN-PISO(WS-IX)      TO PIS9O
-           MOVE WS-LN-TETO(WS-IX)      TO TET9O.
+           MOVE WS-LN-TETO(WS-IX)      TO TET9O
+           MOVE WS-LN-CARGA(WS-IX)     TO CHR9O
+           MOVE WS-LN-SITUAC(WS-IX)    TO SIT9O.
        6018-FIM.
            EXIT.
       *
@@ -1345,7 +1451,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBOAO
            MOVE WS-LN-NIVEL(WS-IX)     TO NIVAO
            MOVE WS-LN-PISO(WS-IX)      TO PISAO
-           MOVE WS-LN-TETO(WS-IX)      TO TETAO.
+           MOVE WS-LN-TETO(WS-IX)      TO TETAO
+           MOVE WS-LN-CARGA(WS-IX)     TO CHRAO
+           MOVE WS-LN-SITUAC(WS-IX)    TO SITAO.
        6019-FIM.
            EXIT.
       *
@@ -1357,7 +1465,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBOBO
            MOVE WS-LN-NIVEL(WS-IX)     TO NIVBO
            MOVE WS-LN-PISO(WS-IX)      TO PISBO
-           MOVE WS-LN-TETO(WS-IX)      TO TETBO.
+           MOVE WS-LN-TETO(WS-IX)      TO TETBO
+           MOVE WS-LN-CARGA(WS-IX)     TO CHRBO
+           MOVE WS-LN-SITUAC(WS-IX)    TO SITBO.
        6020-FIM.
            EXIT.
       *
@@ -1369,7 +1479,9 @@
            MOVE WS-LN-CBO(WS-IX)       TO CBOCO
            MOVE WS-LN-NIVEL(WS-IX)     TO NIVCO
            MOVE WS-LN-PISO(WS-IX)      TO PISCO
-           MOVE WS-LN-TETO(WS-IX)      TO TETCO.
+           MOVE WS-LN-TETO(WS-IX)      TO TETCO
+           MOVE WS-LN-CARGA(WS-IX)     TO CHRCO
+           MOVE WS-LN-SITUAC(WS-IX)    TO SITCO.
        6021-FIM.
            EXIT.
       *
