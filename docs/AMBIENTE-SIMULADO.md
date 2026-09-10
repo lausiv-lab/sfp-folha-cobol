@@ -457,10 +457,19 @@ instalado suporta `ORGANIZATION INDEXED` e que a massa de
 `dados/*.DAT` carrega em arquivo indexado sem perda. Se essa fase
 falhar, todas as outras mudam.
 
-**Fase 1 -- BMS.** Escrever `tools/compilar_bms.py` e conferir o
-JSON gerado contra `copy/SFPM0*.cpy`. Entrega imediata: as
-divergencias BMS ja anotadas no `CLAUDE.md` saem confirmadas por
-ferramenta em vez de por leitura.
+**Fase 1 -- BMS. Feita.** `tools/validar_bms.py` monta os
+statements logicos respeitando a continuacao de coluna 72, confere
+o layout (POS na tela, campo que invade a linha, campos
+sobrepostos contando o byte de atributo, INITIAL maior que o
+LENGTH, PICOUT incompativel com o LENGTH) e cruza cada mapa com o
+`01` correspondente de `copy/SFPM0*.cpy`. `--json` despeja o parse
+e `--resumo` so a contagem por categoria; o codigo de retorno e 1
+quando ha erro, o que serve de porta antes de commit.
+
+Rodada de estreia: 438 erros. A marca de continuacao saia na
+coluna 71 nos quatro mapsets gerados (322 linhas), a grade do
+`SFPM05` passava da coluna 80, e sobraram 26 achados nos tres
+mapas escritos a mao -- ver `docs/PENDENCIAS.md`.
 
 **Fase 2 -- shim minimo e `SFP0000`.** Pre-processador,
 `SFPCICS` com `SEND MAP`, `RECEIVE MAP`, `RETURN TRANSID`, `XCTL`

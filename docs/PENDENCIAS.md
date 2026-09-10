@@ -1,30 +1,10 @@
 # Pendencias Conhecidas
 
-Detalhamento dos itens listados de forma resumida no `CLAUDE.md`.
-Cada item traz o sintoma, a causa e o que a correcao exige. A
-numeracao acompanha a do `CLAUDE.md`.
+Cada item traz o sintoma, a causa e o que a correcao exige. Rode
+`python3 tools/validar_bms.py --resumo` antes de atacar qualquer
+item de mapa: os numeros abaixo saem dali.
 
-## 1. DDL e DCLGEN das seis tabelas novas
-
-Os programas online criados depois do `SFP0120` trabalham sobre
-VSAM: `SFPEVE`, `SFPEST`, `SFPCAR`, `SFPDOM`, `SFPDPT`, `SFPUFE` e
-`SFPMUN`. As tabelas DB2 equivalentes nao existem em `ddl/`, e nao
-ha DCLGEN em `dclgen/` para elas.
-
-Nao e bug: o desenho decidiu que esses cadastros ficam em arquivo.
-A pendencia e de completude da camada DB2 documentada, caso se
-queira o mesmo cadastro consultavel por SQL.
-
-## 2. SFPM04 sem rotulo F4=LISTA nas linhas 8 e 18
-
-O `SFP0130` implementa F4 em tres campos: UF (linha 10), tipo de
-logradouro (linha 8) e banco pagador (linha 18). Somente o da UF
-tem rotulo `F4=LISTA` no mapa. Os outros dois funcionam, mas o
-usuario nao tem como saber.
-
-Corrigir em `tools/gerar_bms.py`, nunca no `.bms`, que e gerado.
-
-## 3. Sete campos do SFPWEST sem campo no SFPM04
+## 1. Sete campos do SFPWEST sem campo no SFPM04
 
 Nao aparecem na tela: inscricao municipal, e-mail, CNPJ do
 sindicato, percentual de contribuicao sindical, dia do
@@ -41,37 +21,85 @@ Corrigir e ampliar o mapa (nao ha espaco na tela atual: exigiria
 segunda tela, como a que o SFP0100 ganhou) ou aceitar que sao
 mantidos so por carga.
 
-## 4. SFPM05 tem coluna CH no cabecalho e nao tem DFHMDF
+## 2. Sete campos de menu do SFPM00 sobrepoem a coluna direita
 
-O cabecalho e o tracejado da grade do `SFPM05` reservam a coluna
-`CH` (carga horaria mensal), mas nao existe `DFHMDF` para ela: a
-grade termina no teto salarial. Duas saidas, ambas em
-`tools/gerar_bms.py`: criar o campo (e o `SFP0140` passa a manter
-`CAR-CARGA-HOR-MES` pela tela) ou remover o rotulo.
+Achado do validador, nao catalogado antes. Os itens da coluna
+esquerda do menu tem `LENGTH=45` (linhas 53, 56, 59, 62, 87, 90 e
+93 do `.bms`), o que leva os dados ate a coluna 49; a coluna
+direita comeca com o byte de atributo na 45. O assembler BMS
+recusa campos que se sobrepoem.
 
-Hoje o `SFP0140` assume 220 na inclusao e preserva o valor na
-alteracao.
+O literal ocupa 43 das 45 posicoes, entao nao basta baixar o
+`LENGTH`: cabem 39 posicoes ate o atributo da coluna direita. Ou o
+literal encurta ('11 - EMPRESA E ESTABELEC. .... SF05'), ou as
+duas colunas do menu se reorganizam. `SFPM00.bms` e escrito a mao.
 
-## 5. SFPM05 sem coluna de situacao
+## 3. PICOUT maior que o LENGTH no SFPM01 e no SFPM02
 
-Como a grade nao tem onde exibir nem alterar `CAR-SITUACAO`, o
-`SFP0140` exclui fisicamente (`EXEC CICS DELETE`) em vez de marcar
-`CAR-SITUACAO = 'E'`. Marcar sem exibir seria pior: o registro
-desapareceria da grade sem forma de reverter pela tela.
+Dezessete campos declaram um `PICOUT` com uma posicao a mais que o
+`LENGTH` do proprio campo: `SALARIO`, `VLRVT`, `VLRVR`, `VLRPS`,
+`PERPEN`, `VLRPEN` e `VLRCON` no `SFPM01`, e `VALO1` a `VALOA` no
+`SFPM02` (`LENGTH=13` com `'ZZZ.ZZZ.ZZ9,99'`, que ocupa 14). Quem
+escreveu contou o mascaramento sem um dos separadores.
 
-Corrigir e acrescentar a coluna no gerador e trocar o `DELETE` por
-`REWRITE` com a situacao, mais o filtro de exibicao.
+Corrigir e escolher, campo a campo, entre alargar o `LENGTH` --
+so onde a linha da tela tiver folga -- e reduzir a mascara em um
+digito. Os dois mapas sao escritos a mao.
 
-## 6. SFPM06 sem coluna para DOM-IND-SISTEMA
+## 4. Rodape do SFPM01 truncado
 
-A grade de dominios nao mostra quais registros sao de sistema; ha
-apenas o aviso fixo na linha 21. O usuario descobre que o dominio e
-protegido quando o `SFP0160` recusa a acao (RN08). Uma coluna `SIS`
-protegida em `tools/gerar_bms.py` resolveria.
+Linha 209 do `SFPM01.bms`: `LENGTH=79` com literal de 85
+caracteres. A tela perde o final, ' F12=CANCELAR', justamente a
+tecla de cancelamento.
+
+## 5. MTOTAL do SFPM02 com tamanho divergente no copybook
+
+`MTOTAL` tem `LENGTH=14` no mapa e nenhum `PICIN`, mas
+`copy/SFPM02.cpy` declara `MTOTALI PIC 9(009)V99`, de 11
+posicoes -- enquanto `MTOTALO` tem as 14 certas
+(`ZZZ.ZZZ.ZZ9,99`). O campo de entrada desalinha o que vem depois
+dele na area simbolica.
 
 ## Resolvidos
 
 Registro do que ja foi corrigido, para nao se reabrir a analise.
+
+**DDL e DCLGEN dos cadastros de apoio** (antigo item 1).
+`ddl/SFPDDL04.sql` cria `TB_UF`, `TB_MUNICIPIO`, `TB_ESTABELEC`,
+`TB_DEPARTAMENTO`, `TB_CARGO` e `TB_DOMINIO`; `ddl/SFPDDL05.sql`
+traz indices e GRANTs. Os DCLGEN correspondentes estao em
+`dclgen/`, mais `SFPDEVE.cpy` para a `TB_EVENTO`, que ja existia
+no `SFPDDL02`. Os programas online continuam sobre VSAM: a camada
+DB2 e documental.
+
+**Marca de continuacao na coluna 71** (achado do validador).
+`tools/gerar_bms.py` fechava as linhas continuadas com
+`ljust(70)`, o que punha o `X` na coluna 71 em 322 linhas dos
+quatro mapsets gerados. O assembler so continua o statement se a
+coluna 72 nao estiver em branco.
+
+**SFPM04 sem rotulo F4 nas linhas 8 e 18** (antigo item 2).
+O tipo de logradouro ganhou o rotulo curto `F4` colado ao campo --
+a linha nao comporta `F4=LISTA` inteiro sem encurtar o
+logradouro -- e `NUMERO:` virou `NUM:` para o numero manter oito
+posicoes. O banco pagador ganhou `F4=LISTA` inteiro, com agencia,
+conta e dia de pagamento deslocados para a direita sem mudar de
+tamanho.
+
+**Grade do SFPM05 fora da tela, sem CH e sem situacao** (antigos
+itens 4 e 5). Piso e teto passaram de treze para dez posicoes
+(`Z(006)9,99`, ate 9.999.999,99), o que trouxe a ultima coluna da
+82 para a 80 e abriu espaco para as duas colunas que faltavam. Com
+a coluna `CH` o `SFP0140` so supoe 220 horas quando o campo vem
+vazio; com a coluna `S` a exclusao virou logica -- a acao `E`
+marca `CAR-SITUACAO` com `E` por `REWRITE`, e o cargo continua na
+grade para poder voltar a `A`. Duas criticas novas: RN10 (carga
+maior que zero) e RN11 (situacao em A ou E).
+
+**SFPM06 sem coluna para DOM-IND-SISTEMA** (antigo item 6).
+Coluna `SIS`, protegida, nas colunas 77 a 79. O `SFP0160` a
+preenche em `3850-REG-PARA-LINHA` e nas doze secoes de pintura. O
+indicador continua sem entrar pela tela.
 
 **Codigo de municipio truncado** (antigo item 3).
 `LOK-COD-SELECIONADO` do `copy/SFPWLOK.cpy` passou de `PIC X(006)`

@@ -17,6 +17,7 @@ python3 tools/gerar_dominios.py   # gera dominios e cadastros de apoio
 ./build/run.sh                    # roda a cadeia mensal completa
 python3 tools/gerar_dicionario.py # regera docs/DICIONARIO-DADOS.md
 python3 tools/gerar_bms.py        # regera os mapsets BMS de grade
+python3 tools/validar_bms.py      # valida os .bms sem CICS
 python3 tools/auditar.py          # confere os calculos por fora
 ```
 
@@ -42,7 +43,15 @@ qualquer layout: ja pegou tres bugs reais de filler.
   coluna 71: o espaco entra no texto do mapa. Quebre o literal
   em exatamente 71 colunas e retome na coluna 16.
 - `SFPM03/04/05/06` sao **gerados** por `tools/gerar_bms.py`.
-  Corrija o gerador, nao o `.bms`.
+  Corrija o gerador, nao o `.bms`. Depois de mexer em qualquer
+  mapa, rode `tools/validar_bms.py`: ele confere layout, coluna
+  de continuacao e o mapa contra o copybook simbolico, e sai com
+  codigo 1 se houver erro.
+- **`POS` aponta o byte de atributo**, e os dados comecam na
+  coluna seguinte. Um campo de `LENGTH=n` em `POS=(l,c)` ocupa de
+  `c` a `c+n`. Quando a coluna seguinte encosta, o atributo dela
+  ja fecha a area digitavel e o `DFHMDF LENGTH=0` de fechamento
+  sobra -- em `gerar_bms.py`, `campo(..., stop=False)`.
 - GnuCOBOL nao aceita `MOVE SPACES` para campo numerico-editado.
   Use `BLANK WHEN ZERO` mais `MOVE ZEROS`.
 - Read-ahead em matching sequencial: o registro lido
@@ -116,8 +125,8 @@ de modulos) de `docs/ARQUITETURA.md`. O que nao esta pronto, com o motivo de
 cada item, esta em `docs/PENDENCIAS.md` -- que tambem registra o
 que ja foi corrigido, para nao se reabrir a analise.
 
-Confira o item no fonte antes de ataca-lo: o doc de pendencias
-descreve tres deles de forma que a medicao nao confirma.
+Confira o item no fonte antes de ataca-lo. Para item de mapa a
+medicao e `python3 tools/validar_bms.py --resumo`.
 
 ## Ambiente para rodar o online
 
@@ -125,9 +134,8 @@ Os programas CICS nao rodam localmente: exigem tradutor CICS e, em
 dois casos, precompilador DB2. `docs/AMBIENTE-SIMULADO.md` compara
 as rotas e detalha a recomendada (container com GnuCOBOL, um
 pre-processador `EXEC CICS` e um modulo `SFPCICS`), com plano em
-seis fases. A Fase 1 -- validacao estatica dos `.bms` -- nao
-depende das outras e pega sozinha a maior parte dos defeitos de
-tela.
+seis fases. A Fase 1 -- validacao estatica dos `.bms` -- esta
+feita, em `tools/validar_bms.py`.
 
 ## Como trabalhar aqui
 
