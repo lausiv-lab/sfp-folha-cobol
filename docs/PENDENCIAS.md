@@ -2,7 +2,9 @@
 
 Cada item traz o sintoma, a causa e o que a correcao exige. Rode
 `python3 tools/validar_bms.py --resumo` antes de atacar qualquer
-item de mapa: os numeros abaixo saem dali.
+item de mapa: os numeros saem dali. A medicao atual e
+`8 mapset(s): 0 erro(s), 0 aviso(s)`, com codigo de retorno 0 --
+nenhum item aberto abaixo vem do validador.
 
 ## 1. Sete campos do SFPWEST sem campo no SFPM04
 
@@ -20,45 +22,6 @@ demais ficam em branco ou zero.
 Corrigir e ampliar o mapa (nao ha espaco na tela atual: exigiria
 segunda tela, como a que o SFP0100 ganhou) ou aceitar que sao
 mantidos so por carga.
-
-## 2. Sete campos de menu do SFPM00 sobrepoem a coluna direita
-
-Achado do validador, nao catalogado antes. Os itens da coluna
-esquerda do menu tem `LENGTH=45` (linhas 53, 56, 59, 62, 87, 90 e
-93 do `.bms`), o que leva os dados ate a coluna 49; a coluna
-direita comeca com o byte de atributo na 45. O assembler BMS
-recusa campos que se sobrepoem.
-
-O literal ocupa 43 das 45 posicoes, entao nao basta baixar o
-`LENGTH`: cabem 39 posicoes ate o atributo da coluna direita. Ou o
-literal encurta ('11 - EMPRESA E ESTABELEC. .... SF05'), ou as
-duas colunas do menu se reorganizam. `SFPM00.bms` e escrito a mao.
-
-## 3. PICOUT maior que o LENGTH no SFPM01 e no SFPM02
-
-Dezessete campos declaram um `PICOUT` com uma posicao a mais que o
-`LENGTH` do proprio campo: `SALARIO`, `VLRVT`, `VLRVR`, `VLRPS`,
-`PERPEN`, `VLRPEN` e `VLRCON` no `SFPM01`, e `VALO1` a `VALOA` no
-`SFPM02` (`LENGTH=13` com `'ZZZ.ZZZ.ZZ9,99'`, que ocupa 14). Quem
-escreveu contou o mascaramento sem um dos separadores.
-
-Corrigir e escolher, campo a campo, entre alargar o `LENGTH` --
-so onde a linha da tela tiver folga -- e reduzir a mascara em um
-digito. Os dois mapas sao escritos a mao.
-
-## 4. Rodape do SFPM01 truncado
-
-Linha 209 do `SFPM01.bms`: `LENGTH=79` com literal de 85
-caracteres. A tela perde o final, ' F12=CANCELAR', justamente a
-tecla de cancelamento.
-
-## 5. MTOTAL do SFPM02 com tamanho divergente no copybook
-
-`MTOTAL` tem `LENGTH=14` no mapa e nenhum `PICIN`, mas
-`copy/SFPM02.cpy` declara `MTOTALI PIC 9(009)V99`, de 11
-posicoes -- enquanto `MTOTALO` tem as 14 certas
-(`ZZZ.ZZZ.ZZ9,99`). O campo de entrada desalinha o que vem depois
-dele na area simbolica.
 
 ## Resolvidos
 
@@ -171,3 +134,62 @@ ja existiam no dispatcher do `SFP0900`.
 **SFPM01.bms linha 47: LENGTH=45 com literal de 46** (antigo item
 5). O `LENGTH` passou a 46, igual ao literal
 `'(C=CONSULTA I=INCLUSAO A=ALTERACAO E=EXCLUSAO)'`.
+
+**Sete campos de menu do SFPM00 sobrepoem a coluna direita**
+(antigo item 2). A colisao era geometrica: item da coluna esquerda
+em `POS=(lin,5)` com `LENGTH=45` ocupa as colunas 5 a 50, e o da
+direita abria o byte de atributo na 46 -- cinco colunas de
+cruzamento nas linhas de tela 5, 6, 7, 8, 11, 12 e 13. Encurtar o
+leader de pontos resolveria cinco itens, mas
+`13 - DEPARTAMENTOS E CENTROS DE CUSTO` e
+`34 - ABERTURA E FECHAMENTO DE COMPET.` tem 37 caracteres e nenhum
+ponto para tirar. A saida nao mexeu em texto: esquerda para
+`POS=(lin,3)`/`LENGTH=43` e direita para `POS=(lin,47)`/`LENGTH=32`,
+faixas 3-46 e 47-79. Os itens perdem duas colunas de recuo e os
+dois lados ficam com `LENGTH` igual ao literal, sem folga -- quem
+alargar uma descricao volta a sobrepor. Os quinze campos sao
+`DFHMDF` anonimos, portanto `copy/SFPM00.cpy` nao mudou, e o
+`SFP0000` tambem nao, porque o roteamento vive na
+`WS-TABELA-OPCOES`. Os rotulos de cabecalho continuam alinhados
+para a geometria antiga; o desalinhamento e cosmetico, o validador
+nao o checa e nao foi corrigido. Commit `a9593da`.
+
+**PICOUT maior que o LENGTH no SFPM01 e no SFPM02** (antigo item
+3). Os dezessete campos tinham duas causas opostas, medidas uma a
+uma. No `SFPM02` o `PICOUT` estava certo: `PICIN` e o
+`WS-LN-VALOR PIC 9(009)V99` do `SFP0120` confirmam nove digitos
+inteiros, logo `VALO1` a `VALOA` passaram de `LENGTH=13` para 14 e
+empurraram `TIPOn` (59 para 60), `ORIGn` (61 para 62) e o stopper
+`ASKIP` (65 para 66) nas dez linhas de grade, com o terminador da
+linha indo de 65 para 66. No `SFPM01`, `SALARIO` (11 para 14) e
+`PERPEN` (05 para 06, que nao contava a virgula) eram so largura
+de tela curta, mas nos cinco campos de valor (`VLRVT`, `VLRVR`,
+`VLRPS`, `VLRPEN`, `VLRCON`) o errado era a mascara:
+`'ZZZ.ZZ9,99'` mostrava seis digitos inteiros contra os sete que
+`PICIN='9(7)V99'`, o `PIC 9(007)V99` do `SFP0100` e o
+`DECIMAL(9,2)` da tabela pedem -- valor a partir de
+R$ 1.000.000,00 saia truncado no digito das centenas de milhar.
+Viraram `'Z.ZZZ.ZZ9,99'` com `LENGTH=12`, e os cinco campos `*O`
+do copybook acompanharam. As colunas das linhas de tela 11, 14 e
+15 foram realocadas; a 14 passa a terminar na coluna 80, o limite
+exato, sem folga -- troca deliberada por exibir a amplitude real.
+Nenhum programa mudou: `SFP0120` e `SFP0100` referenciam os campos
+por nome, nunca pela largura fisica. No `SFPM02` os rotulos de
+cabecalho da grade ficaram um caractere fora do lugar sobre as
+colunas deslocadas; e cosmetico, o validador nao checa e nao foi
+corrigido. Commits `e28c722` (SFPM02) e `1244891` (SFPM01).
+
+**Rodape do SFPM01 truncado** (antigo item 4). O `INITIAL` das
+teclas de funcao tinha 85 caracteres em `LENGTH=79`, e 79 ja e o
+teto fisico da linha 23 -- nao havia como alargar. Os separadores
+de espaco duplo entre as teclas viraram simples, o que da
+exatamente 79 e devolve o ` F12=CANCELAR` que se perdia.
+Commit `1244891`.
+
+**MTOTAL do SFPM02 com tamanho divergente no copybook** (antigo
+item 5). Campo so-protegido, sem `PICIN`: a area de entrada tem de
+ser `X(length)`, e nao a imagem numerica do dado. `MTOTALI` estava
+`PIC 9(009)V99`, onze bytes contra o `LENGTH=14` do mapa, e
+desalinhava o que vinha depois na area simbolica. Virou
+`PIC X(014)`; `MTOTALO` ja tinha as catorze certas.
+Commit `e28c722`.
