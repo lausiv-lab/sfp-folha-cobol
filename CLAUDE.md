@@ -151,3 +151,32 @@ as armadilhas de `FSET`/`FRSET` -- use para qualquer medicao de
 mapa; `conferente-cadeia` roda a cadeia do zero e devolve so o
 veredito da triangulacao. O porque e o metodo de medicao estao em
 `docs/OTIMIZACAO-TOKENS.md`.
+
+## Como executar (obrigatorio)
+
+Quatro regras valem para qualquer pedido neste repositorio.
+
+**Delegue a execucao a um agente.** O fio principal planeja,
+decide e relata; quem le, mede, edita e roda e um subagente.
+Prefira o agente local quando existir (`inspetor-tela` para
+qualquer coisa de mapa BMS, `conferente-cadeia` para a cadeia
+batch) e um agente de proposito geral no resto. O ganho e de
+contexto: o do subagente morre com ele, e o principal recebe so o
+veredito. Ver `docs/OTIMIZACAO-TOKENS.md`.
+
+**Rode em background.** Tarefa que demora -- geradores, `build.sh`,
+`run.sh`, `auditar.py`, `validar_bms.py`, varredura de fontes --
+sai com `run_in_background`, e os subagentes rodam em paralelo
+quando as tarefas sao independentes. Nao bloqueie a sessao
+esperando saida.
+
+**Pare e pergunte quando a decisao for minha.** Escolha de layout
+de tela, mudanca de PICTURE ou de LRECL, troca de regra de
+negocio, exclusao logica contra fisica, push, merge e qualquer
+coisa irreversivel: pergunte antes, com as opcoes medidas. O que
+tem default obvio, decida e siga.
+
+**Feche com relatorio resumido.** No fim, uma sintese curta: o que
+foi executado, o resultado medido (numeros, nao log), o que ficou
+de fora e por que, e o proximo passo sugerido. Log inteiro so se
+eu pedir.
